@@ -748,7 +748,7 @@
       "Pear": {
         fodmapTypes: ["fructose", "sorbitol"],
         reasons: ["Very high in fructose", "Contains sorbitol"],
-        alternatives: ["Kiwi", "Grapes", "Cantaloupe"]
+        alternatives: ["Kiwi", "Blueberries", "Cantaloupe"]
       },
       "Mango": {
         fodmapTypes: ["fructose"],
@@ -774,6 +774,21 @@
         fodmapTypes: ["fructose"],
         reasons: ["High fructose content"],
         alternatives: ["Blueberries", "Raspberries (small serve)"]
+      },
+      "Grapes": {
+        fodmapTypes: ["fructose"],
+        reasons: ["Fructose accumulates quickly", "More than 10 grapes becomes high FODMAP"],
+        alternatives: ["Blueberries", "Kiwi", "Cantaloupe"]
+      },
+      "Raspberry": {
+        fodmapTypes: ["fructose"],
+        reasons: ["Fructose adds up at larger servings", "Keep to ⅓ cup or less"],
+        alternatives: ["Blueberries", "Strawberries (5 max)"]
+      },
+      "Strawberry": {
+        fodmapTypes: ["fructose"],
+        reasons: ["Fructose becomes problematic over 5 berries", "Safe in small portions"],
+        alternatives: ["Blueberries", "Kiwi", "Cantaloupe"]
       },
 
       // Grains
@@ -934,6 +949,16 @@
         reasons: ["Contains GOS", "¼ cup canned is moderate"],
         alternatives: ["Firm tofu", "Canned lentils (small)"]
       },
+      "Chickpeas (Canned)": {
+        fodmapTypes: ["gos", "fructans"],
+        reasons: ["Contains GOS (galacto-oligosaccharides)", "¼ cup max for moderate tolerance"],
+        alternatives: ["Firm tofu", "Canned lentils (¼ cup)"]
+      },
+      "Lentils (Canned)": {
+        fodmapTypes: ["gos"],
+        reasons: ["Contains GOS", "Canning reduces FODMAPs but still present", "¼ cup max is moderate"],
+        alternatives: ["Firm tofu", "Tempeh", "Small serve black beans"]
+      },
       "Beer": {
         fodmapTypes: ["fructans"],
         reasons: ["Made from barley/wheat", "1 bottle is moderate"],
@@ -1033,7 +1058,7 @@
           { name: "Blueberries", emoji: "🫐", level: "low", serving: "1 cup" },
           { name: "Cantaloupe", emoji: "🍈", level: "low", serving: "¾ cup" },
           { name: "Cherries", emoji: "🍒", level: "high" },
-          { name: "Grapes", emoji: "🍇", level: "low", serving: "10 grapes" },
+          { name: "Grapes", emoji: "🍇", level: "moderate", serving: "10 grapes max" },
           { name: "Kiwi", emoji: "🥝", level: "low", serving: "2 small" },
           { name: "Lemon", emoji: "🍋", level: "low" },
           { name: "Mango", emoji: "🥭", level: "high" },
@@ -1042,8 +1067,8 @@
           { name: "Peach", emoji: "🍑", level: "high" },
           { name: "Pear", emoji: "🍐", level: "high" },
           { name: "Pineapple", emoji: "🍍", level: "low", serving: "1 cup" },
-          { name: "Raspberry", emoji: "🍓", level: "low", serving: "⅓ cup" },
-          { name: "Strawberry", emoji: "🍓", level: "low", serving: "5 medium" },
+          { name: "Raspberry", emoji: "🍓", level: "moderate", serving: "⅓ cup max" },
+          { name: "Strawberry", emoji: "🍓", level: "moderate", serving: "5 medium max" },
           { name: "Watermelon", emoji: "🍉", level: "high" },
         ]
       },
@@ -1139,10 +1164,10 @@
           { name: "Baked Beans", emoji: "🫘", level: "high" },
           { name: "Black Beans", emoji: "🫘", level: "moderate", serving: "¼ cup" },
           { name: "Broad Beans", emoji: "🫘", level: "high" },
-          { name: "Chickpeas (Canned)", emoji: "🫘", level: "low", serving: "¼ cup" },
+          { name: "Chickpeas (Canned)", emoji: "🫘", level: "moderate", serving: "¼ cup max" },
           { name: "Hummus", emoji: "🫘", level: "high" },
           { name: "Kidney Beans", emoji: "🫘", level: "high" },
-          { name: "Lentils (Canned)", emoji: "🫘", level: "low", serving: "¼ cup" },
+          { name: "Lentils (Canned)", emoji: "🫘", level: "moderate", serving: "¼ cup max" },
           { name: "Soybeans", emoji: "🫘", level: "high" },
           { name: "Split Peas", emoji: "🫘", level: "high" },
         ]
