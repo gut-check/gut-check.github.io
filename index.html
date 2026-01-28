@@ -3,6 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#faf9f7">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="mobile-web-app-capable" content="yes">
   <title>Gut Check - FODMAP Food Guide</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:wght@600;700&display=swap');
@@ -692,7 +696,7 @@
   <div class="controls">
     <div class="search-container">
       <span class="search-icon">🔍</span>
-      <input type="text" class="search-input" id="searchInput" placeholder="Search foods..." oninput="handleSearch(this.value)">
+      <input type="search" inputmode="search" class="search-input" id="searchInput" placeholder="Search foods..." oninput="handleSearch(this.value)">
       <span class="search-clear" id="searchClear" onclick="clearSearch()">✕</span>
     </div>
     <div class="view-toggle">
