@@ -968,6 +968,26 @@
         fodmapTypes: ["fructose"],
         reasons: ["Fortified wine with residual sugar", "Higher fructose than dry wines"],
         alternatives: ["Dry red wine", "Whiskey", "Brandy"]
+      },
+      "Sushi (Avocado)": {
+        fodmapTypes: ["sorbitol"],
+        reasons: ["Avocado contains sorbitol", "Limit to 3-4 pieces"],
+        alternatives: ["Salmon/tuna sushi", "Cucumber rolls"]
+      },
+      "Sushi (Tempura)": {
+        fodmapTypes: ["fructans"],
+        reasons: ["Tempura batter often wheat-based", "Check if gluten-free"],
+        alternatives: ["Plain fish sushi", "Sashimi"]
+      },
+      "Miso Soup": {
+        fodmapTypes: ["gos"],
+        reasons: ["Miso from soybeans (GOS)", "Often contains onion/seaweed"],
+        alternatives: ["Clear broth", "Small portion only"]
+      },
+      "Edamame": {
+        fodmapTypes: ["gos", "fructans"],
+        reasons: ["Young soybeans high in GOS", "Also contains fructans"],
+        alternatives: ["Seaweed salad", "Pickled ginger"]
       }
     };
 
@@ -1176,6 +1196,24 @@
           { name: "Rooibos Tea", emoji: "🍵", level: "low" },
           { name: "Water", emoji: "💧", level: "low" },
           { name: "White Tea", emoji: "🍵", level: "low" },
+        ]
+      },
+      prepared: {
+        icon: "🍱",
+        title: "Prepared Foods",
+        foods: [
+          { name: "Sushi (Plain Fish)", emoji: "🍣", level: "low", serving: "6 pieces" },
+          { name: "Sushi (Salmon)", emoji: "🍣", level: "low", serving: "6 pieces" },
+          { name: "Sushi (Tuna)", emoji: "🍣", level: "low", serving: "6 pieces" },
+          { name: "Sushi (Avocado)", emoji: "🍣", level: "moderate", serving: "3-4 pieces" },
+          { name: "Sushi (Tempura)", emoji: "🍣", level: "moderate", serving: "check batter" },
+          { name: "Sashimi", emoji: "🍣", level: "low" },
+          { name: "Miso Soup", emoji: "🍜", level: "moderate", serving: "small bowl" },
+          { name: "Edamame", emoji: "🫛", level: "high" },
+          { name: "Seaweed Salad", emoji: "🥗", level: "low" },
+          { name: "Pickled Ginger", emoji: "🍣", level: "low" },
+          { name: "Wasabi", emoji: "🟢", level: "low" },
+          { name: "Soy Sauce (GF)", emoji: "🥢", level: "low" },
         ]
       },
       alcohol: {
