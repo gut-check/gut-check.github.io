@@ -1,0 +1,24 @@
+{
+  "name": "fodmap-app",
+  "version": "0.1.0",
+  "description": "FODMAP food tracker app - check if foods are low, moderate, or high FODMAP",
+  "module": "src/index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "bun run --watch src/example.ts",
+    "test": "bun run src/example.ts",
+    "build": "bun build src/index.ts --outdir dist"
+  },
+  "keywords": [
+    "fodmap",
+    "ibs",
+    "food",
+    "diet",
+    "tracker"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^5.3.0"
+  }
+}

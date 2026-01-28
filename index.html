@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gut Check - FODMAP Food Guide</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: #f5f5f7;
+      color: #1d1d1f;
+      line-height: 1.5;
+    }
+
+    header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      opacity: 0.9;
+      font-size: 1.1rem;
+    }
+
+    .legend {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      padding: 1rem;
+      background: white;
+      border-bottom: 1px solid #e5e5e5;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+      padding: 0.5rem 1rem;
+      border-radius: 25px;
+      transition: all 0.2s;
+      border: 2px solid transparent;
+      user-select: none;
+    }
+
+    .legend-item:hover {
+      background: #f0f0f0;
+    }
+
+    .legend-item.active {
+      background: #e8e8e8;
+    }
+
+    .legend-item.active[data-filter="low"] {
+      border-color: #34c759;
+      background: #d4edda;
+    }
+
+    .legend-item.active[data-filter="moderate"] {
+      border-color: #ff9500;
+      background: #fff3cd;
+    }
+
+    .legend-item.active[data-filter="high"] {
+      border-color: #ff3b30;
+      background: #f8d7da;
+    }
+
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .legend-dot.low { background: #34c759; }
+    .legend-dot.moderate { background: #ff9500; }
+    .legend-dot.high { background: #ff3b30; }
+
+    .food-card-container.hidden {
+      display: none;
+    }
+
+    .category.hidden {
+      display: none;
+    }
+
+    .filter-hint {
+      text-align: center;
+      padding: 0.5rem;
+      font-size: 0.8rem;
+      color: #86868b;
+      background: #f5f5f7;
+    }
+
+    .controls {
+      background: white;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid #e5e5e5;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .search-container {
+      position: relative;
+      flex: 1;
+      max-width: 400px;
+      min-width: 200px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.75rem 1rem 0.75rem 2.75rem;
+      border: 2px solid #e5e5e5;
+      border-radius: 25px;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-input:focus {
+      border-color: #667eea;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #86868b;
+      font-size: 1rem;
+    }
+
+    .search-clear {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #86868b;
+      font-size: 1.2rem;
+      cursor: pointer;
+      width: 24px;
+      height: 24px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: all 0.2s;
+    }
+
+    .search-clear:hover {
+      background: #e5e5e5;
+      color: #1d1d1f;
+    }
+
+    .search-clear.visible {
+      display: flex;
+    }
+
+    .view-toggle {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .view-btn {
+      padding: 0.6rem 1.2rem;
+      border: 2px solid #e5e5e5;
+      background: white;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: 500;
+    }
+
+    .view-btn:hover {
+      background: #f0f0f0;
+    }
+
+    .view-btn.active {
+      border-color: #667eea;
+      background: #667eea;
+      color: white;
+    }
+
+    .no-results {
+      text-align: center;
+      padding: 3rem;
+      color: #86868b;
+      font-size: 1.1rem;
+    }
+
+    .food-category-tag {
+      font-size: 0.7rem;
+      color: #86868b;
+      margin-top: 0.25rem;
+    }
+
+    main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .category {
+      margin-bottom: 3rem;
+    }
+
+    .category-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid #e5e5e5;
+    }
+
+    .category-icon {
+      font-size: 1.75rem;
+    }
+
+    .category-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #1d1d1f;
+    }
+
+    .food-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1rem;
+    }
+
+    .food-card-container {
+      border-radius: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: box-shadow 0.2s;
+    }
+
+    .food-card-container:hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+
+    .food-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .food-image {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      background: #f0f0f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+    }
+
+    .food-info {
+      padding: 1rem;
+    }
+
+    .food-name {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #1d1d1f;
+    }
+
+    .fodmap-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .fodmap-badge.low {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .fodmap-badge.moderate {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .fodmap-badge.high {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    .fodmap-badge::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .fodmap-badge.low::before { background: #34c759; }
+    .fodmap-badge.moderate::before { background: #ff9500; }
+    .fodmap-badge.high::before { background: #ff3b30; }
+
+    .serving-info {
+      margin-top: 0.5rem;
+      font-size: 0.75rem;
+      color: #86868b;
+    }
+
+    /* Flip Card Styles */
+    .food-card-container {
+      perspective: 1000px;
+    }
+
+    .food-card {
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.6s;
+    }
+
+    .food-card-container.flipped .food-card {
+      transform: rotateY(180deg);
+    }
+
+    .card-front,
+    .card-back {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+
+    .card-front {
+      position: relative;
+    }
+
+    .card-back {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      transform: rotateY(180deg);
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .back-header {
+      padding: 0.75rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #e5e5e5;
+      background: #f5f5f7;
+    }
+
+    .back-header .food-name {
+      margin: 0;
+      font-size: 0.9rem;
+    }
+
+    .back-content {
+      padding: 0.75rem 1rem;
+      flex: 1;
+      overflow-y: auto;
+      font-size: 0.8rem;
+    }
+
+    .back-section {
+      margin-bottom: 0.75rem;
+    }
+
+    .back-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .back-section-title {
+      font-weight: 600;
+      color: #86868b;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.35rem;
+    }
+
+    .fodmap-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+
+    .fodmap-pill {
+      padding: 0.2rem 0.5rem;
+      border-radius: 12px;
+      font-size: 0.7rem;
+      font-weight: 500;
+    }
+
+    .fodmap-pill.fructans { background: #fce4ec; color: #c2185b; }
+    .fodmap-pill.lactose { background: #e3f2fd; color: #1565c0; }
+    .fodmap-pill.fructose { background: #fff3e0; color: #ef6c00; }
+    .fodmap-pill.gos { background: #e8f5e9; color: #2e7d32; }
+    .fodmap-pill.sorbitol { background: #f3e5f5; color: #7b1fa2; }
+    .fodmap-pill.mannitol { background: #e0f7fa; color: #00838f; }
+
+    .reasons-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .reasons-list li {
+      position: relative;
+      padding-left: 0.9rem;
+      margin-bottom: 0.2rem;
+      color: #1d1d1f;
+    }
+
+    .reasons-list li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: #ff3b30;
+    }
+
+    .alternatives-text {
+      color: #34c759;
+      font-weight: 500;
+    }
+
+    .flip-indicator {
+      position: absolute;
+      bottom: 0.5rem;
+      right: 0.5rem;
+      font-size: 0.85rem;
+      opacity: 0.4;
+      transition: opacity 0.2s;
+      cursor: pointer;
+    }
+
+    .food-card-container:hover .flip-indicator {
+      opacity: 0.8;
+    }
+
+    .food-card-container.has-details {
+      cursor: pointer;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: #86868b;
+      font-size: 0.85rem;
+    }
+
+    footer a {
+      color: #667eea;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.75rem;
+      }
+
+      .food-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+      }
+
+      .legend {
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Gut Check</h1>
+    <p>Know what's safe to eat at a glance</p>
+  </header>
+
+  <div class="legend">
+    <div class="legend-item" data-filter="low" onclick="toggleFilter('low')">
+      <div class="legend-dot low"></div>
+      <span>Low FODMAP - Safe</span>
+    </div>
+    <div class="legend-item" data-filter="moderate" onclick="toggleFilter('moderate')">
+      <div class="legend-dot moderate"></div>
+      <span>Moderate - Limit Portions</span>
+    </div>
+    <div class="legend-item" data-filter="high" onclick="toggleFilter('high')">
+      <div class="legend-dot high"></div>
+      <span>High FODMAP - Avoid</span>
+    </div>
+  </div>
+  <div class="filter-hint" id="filterHint">Click a category above to filter foods</div>
+
+  <div class="controls">
+    <div class="search-container">
+      <span class="search-icon">🔍</span>
+      <input type="text" class="search-input" id="searchInput" placeholder="Search foods..." oninput="handleSearch(this.value)">
+      <span class="search-clear" id="searchClear" onclick="clearSearch()">✕</span>
+    </div>
+    <div class="view-toggle">
+      <button class="view-btn active" data-view="category" onclick="setView('category')">By Category</button>
+      <button class="view-btn" data-view="alphabetical" onclick="setView('alphabetical')">A-Z</button>
+    </div>
+  </div>
+
+  <main id="app"></main>
+
+  <footer>
+    <p>Data based on <a href="https://www.monashfodmap.com" target="_blank">Monash University FODMAP Research</a></p>
+    <p style="margin-top: 0.5rem;">Always consult a dietitian before starting a FODMAP diet.</p>
+  </footer>
+
+  <script>
+    // Detailed FODMAP info for high FODMAP foods (for flip cards)
+    // This data structure is separate for future API migration
+    const foodDetails = {
+      // Vegetables
+      "Garlic": {
+        fodmapTypes: ["fructans"],
+        reasons: ["Very high in fructans", "Even small amounts trigger symptoms"],
+        alternatives: ["Garlic-infused oil", "Chives", "Asafoetida"]
+      },
+      "Onion": {
+        fodmapTypes: ["fructans"],
+        reasons: ["High fructan content", "Found in many sauces/dishes"],
+        alternatives: ["Green part of spring onion", "Chives", "Garlic-infused oil"]
+      },
+      "Mushrooms": {
+        fodmapTypes: ["mannitol"],
+        reasons: ["High in mannitol (polyol)", "All varieties are high FODMAP"],
+        alternatives: ["Oyster mushrooms (small serve)", "Canned champignon"]
+      },
+      "Cauliflower": {
+        fodmapTypes: ["mannitol"],
+        reasons: ["Contains mannitol", "Large serves problematic"],
+        alternatives: ["Broccoli heads", "Bok choy"]
+      },
+      "Asparagus": {
+        fodmapTypes: ["fructans"],
+        reasons: ["Contains fructans", "Moderate portions only"],
+        alternatives: ["Green beans", "Bell peppers"]
+      },
+
+      // Fruits
+      "Apple": {
+        fodmapTypes: ["fructose", "sorbitol"],
+        reasons: ["High fructose (excess)", "Contains sorbitol"],
+        alternatives: ["Unripe banana", "Oranges", "Strawberries"]
+      },
+      "Pear": {
+        fodmapTypes: ["fructose", "sorbitol"],
+        reasons: ["Very high in fructose", "Contains sorbitol"],
+        alternatives: ["Kiwi", "Grapes", "Cantaloupe"]
+      },
+      "Mango": {
+        fodmapTypes: ["fructose"],
+        reasons: ["High fructose content", "Even small amounts high"],
+        alternatives: ["Papaya", "Pineapple", "Passion fruit"]
+      },
+      "Watermelon": {
+        fodmapTypes: ["fructose", "mannitol"],
+        reasons: ["High fructose", "Contains mannitol"],
+        alternatives: ["Cantaloupe", "Honeydew (small)"]
+      },
+      "Cherries": {
+        fodmapTypes: ["fructose", "sorbitol"],
+        reasons: ["High sorbitol content", "Excess fructose"],
+        alternatives: ["Blueberries", "Strawberries"]
+      },
+      "Peach": {
+        fodmapTypes: ["sorbitol"],
+        reasons: ["High sorbitol (polyol)", "Stone fruits problematic"],
+        alternatives: ["Oranges", "Pineapple"]
+      },
+      "Blackberries": {
+        fodmapTypes: ["fructose"],
+        reasons: ["High fructose content"],
+        alternatives: ["Blueberries", "Raspberries (small serve)"]
+      },
+
+      // Grains
+      "Brioche": {
+        fodmapTypes: ["fructans", "lactose", "fructose"],
+        reasons: ["Wheat flour (fructans)", "Dairy (milk, butter)", "Often contains honey"],
+        alternatives: ["GF bread", "Sourdough (spelt)"]
+      },
+      "Barley": {
+        fodmapTypes: ["fructans"],
+        reasons: ["High fructan grain", "Found in many beers"],
+        alternatives: ["Rice", "Quinoa", "Oats"]
+      },
+      "Rye": {
+        fodmapTypes: ["fructans"],
+        reasons: ["High fructan content", "Includes rye bread"],
+        alternatives: ["Spelt sourdough", "GF bread"]
+      },
+      "Couscous": {
+        fodmapTypes: ["fructans"],
+        reasons: ["Made from wheat", "High in fructans"],
+        alternatives: ["Quinoa", "Rice", "Buckwheat"]
+      },
+
+      // Dairy
+      "Milk (Regular)": {
+        fodmapTypes: ["lactose"],
+        reasons: ["High lactose content", "Most common trigger"],
+        alternatives: ["Lactose-free milk", "Almond milk", "Oat milk"]
+      },
+      "Ice Cream": {
+        fodmapTypes: ["lactose"],
+        reasons: ["High lactose from milk/cream", "Often contains fructose"],
+        alternatives: ["Lactose-free ice cream", "Sorbet (check ingredients)"]
+      },
+      "Yogurt (Regular)": {
+        fodmapTypes: ["lactose"],
+        reasons: ["Contains lactose", "Amount varies by brand"],
+        alternatives: ["Lactose-free yogurt", "Coconut yogurt"]
+      },
+      "Cream": {
+        fodmapTypes: ["lactose"],
+        reasons: ["Contains lactose", "Heavy cream lower"],
+        alternatives: ["Coconut cream", "Lactose-free cream"]
+      },
+
+      // Nuts
+      "Cashews": {
+        fodmapTypes: ["gos"],
+        reasons: ["High in GOS", "Even small amounts high"],
+        alternatives: ["Macadamias", "Peanuts", "Walnuts"]
+      },
+      "Pistachios": {
+        fodmapTypes: ["fructans", "gos"],
+        reasons: ["Contains fructans", "Also high in GOS"],
+        alternatives: ["Pine nuts", "Macadamias", "Peanuts"]
+      },
+
+      // Legumes
+      "Baked Beans": {
+        fodmapTypes: ["gos", "fructans"],
+        reasons: ["Navy beans high in GOS", "Often onion/garlic added"],
+        alternatives: ["Canned lentils (small)", "Firm tofu"]
+      },
+      "Kidney Beans": {
+        fodmapTypes: ["gos"],
+        reasons: ["Very high GOS content", "All red beans similar"],
+        alternatives: ["Canned chickpeas (¼ cup)", "Firm tofu"]
+      },
+      "Hummus": {
+        fodmapTypes: ["gos", "fructans"],
+        reasons: ["Chickpea-based (GOS)", "Contains garlic"],
+        alternatives: ["Baba ganoush (no garlic)", "Tahini"]
+      },
+      "Soybeans": {
+        fodmapTypes: ["gos", "fructans"],
+        reasons: ["High GOS content", "Includes edamame"],
+        alternatives: ["Firm tofu", "Tempeh"]
+      },
+
+      // Condiments
+      "Honey": {
+        fodmapTypes: ["fructose"],
+        reasons: ["Very high fructose", "Excess fructose load"],
+        alternatives: ["Maple syrup", "Rice malt syrup"]
+      },
+      "Agave": {
+        fodmapTypes: ["fructose"],
+        reasons: ["Extremely high fructose", "Worse than honey"],
+        alternatives: ["Maple syrup", "Stevia", "Sugar"]
+      },
+
+      // Beverages
+      "Apple Juice": {
+        fodmapTypes: ["fructose", "sorbitol"],
+        reasons: ["Concentrated fructose", "From apples (sorbitol)"],
+        alternatives: ["Orange juice (small)", "Cranberry juice"]
+      },
+      "Chamomile Tea": {
+        fodmapTypes: ["fructans"],
+        reasons: ["Chamomile flowers high in fructans", "Strong brews worse"],
+        alternatives: ["Peppermint tea", "Green tea", "Ginger tea"]
+      },
+      "Kombucha": {
+        fodmapTypes: ["fructose", "fructans"],
+        reasons: ["Fermented with sugar", "May contain high FODMAP ingredients"],
+        alternatives: ["Water kefir", "Plain water", "Green tea"]
+      }
+    };
+
+    // Food data with emojis as images
+    const foodData = {
+      vegetables: {
+        icon: "🥬",
+        title: "Vegetables",
+        foods: [
+          { name: "Asparagus", emoji: "🌿", level: "high" },
+          { name: "Bell Pepper", emoji: "🫑", level: "low" },
+          { name: "Bok Choy", emoji: "🥬", level: "low" },
+          { name: "Broccoli", emoji: "🥦", level: "low", serving: "¾ cup heads" },
+          { name: "Cabbage", emoji: "🥬", level: "low", serving: "¾ cup" },
+          { name: "Carrot", emoji: "🥕", level: "low" },
+          { name: "Cauliflower", emoji: "🥬", level: "high" },
+          { name: "Celery", emoji: "🥬", level: "moderate", serving: "<5cm stalk" },
+          { name: "Cucumber", emoji: "🥒", level: "low" },
+          { name: "Eggplant", emoji: "🍆", level: "low", serving: "1 cup" },
+          { name: "Garlic", emoji: "🧄", level: "high" },
+          { name: "Green Beans", emoji: "🫛", level: "low" },
+          { name: "Kale", emoji: "🥬", level: "low" },
+          { name: "Lettuce", emoji: "🥬", level: "low" },
+          { name: "Mushrooms", emoji: "🍄", level: "high" },
+          { name: "Onion", emoji: "🧅", level: "high" },
+          { name: "Potato", emoji: "🥔", level: "low" },
+          { name: "Pumpkin", emoji: "🎃", level: "low", serving: "63g" },
+          { name: "Spinach", emoji: "🥬", level: "low" },
+          { name: "Sweet Potato", emoji: "🍠", level: "low", serving: "½ cup" },
+          { name: "Tomato", emoji: "🍅", level: "low" },
+          { name: "Zucchini", emoji: "🥒", level: "low", serving: "65g" },
+        ]
+      },
+      fruits: {
+        icon: "🍎",
+        title: "Fruits",
+        foods: [
+          { name: "Apple", emoji: "🍎", level: "high" },
+          { name: "Avocado", emoji: "🥑", level: "moderate", serving: "⅛ avocado" },
+          { name: "Banana (Unripe)", emoji: "🍌", level: "low", serving: "1 medium" },
+          { name: "Banana (Ripe)", emoji: "🍌", level: "moderate" },
+          { name: "Blackberries", emoji: "🫐", level: "high" },
+          { name: "Blueberries", emoji: "🫐", level: "low", serving: "1 cup" },
+          { name: "Cantaloupe", emoji: "🍈", level: "low", serving: "¾ cup" },
+          { name: "Cherries", emoji: "🍒", level: "high" },
+          { name: "Grapes", emoji: "🍇", level: "low", serving: "10 grapes" },
+          { name: "Kiwi", emoji: "🥝", level: "low", serving: "2 small" },
+          { name: "Lemon", emoji: "🍋", level: "low" },
+          { name: "Mango", emoji: "🥭", level: "high" },
+          { name: "Orange", emoji: "🍊", level: "low" },
+          { name: "Papaya", emoji: "🍈", level: "low" },
+          { name: "Peach", emoji: "🍑", level: "high" },
+          { name: "Pear", emoji: "🍐", level: "high" },
+          { name: "Pineapple", emoji: "🍍", level: "low", serving: "1 cup" },
+          { name: "Raspberry", emoji: "🍓", level: "low", serving: "⅓ cup" },
+          { name: "Strawberry", emoji: "🍓", level: "low", serving: "5 medium" },
+          { name: "Watermelon", emoji: "🍉", level: "high" },
+        ]
+      },
+      grains: {
+        icon: "🌾",
+        title: "Grains & Cereals",
+        foods: [
+          { name: "Barley", emoji: "🌾", level: "high" },
+          { name: "Brioche", emoji: "🍞", level: "high" },
+          { name: "Buckwheat", emoji: "🌾", level: "low" },
+          { name: "Corn Tortillas", emoji: "🫓", level: "low", serving: "3 pieces" },
+          { name: "Couscous", emoji: "🍚", level: "high" },
+          { name: "GF Bread", emoji: "🍞", level: "low" },
+          { name: "GF Pasta", emoji: "🍝", level: "low" },
+          { name: "Oats", emoji: "🥣", level: "low", serving: "½ cup" },
+          { name: "Popcorn", emoji: "🍿", level: "low" },
+          { name: "Quinoa", emoji: "🍚", level: "low" },
+          { name: "Rice", emoji: "🍚", level: "low" },
+          { name: "Rice Noodles", emoji: "🍜", level: "low" },
+          { name: "Rye", emoji: "🍞", level: "high" },
+          { name: "Sourdough (Spelt)", emoji: "🍞", level: "low" },
+          { name: "Challah Bread", emoji: "🍞", level: "moderate", serving: "1 slice" },
+          { name: "Wheat Bread", emoji: "🍞", level: "moderate", serving: "1 slice" },
+          { name: "Wheat Pasta", emoji: "🍝", level: "moderate", serving: "½ cup" },
+        ]
+      },
+      dairy: {
+        icon: "🥛",
+        title: "Dairy & Alternatives",
+        foods: [
+          { name: "Almond Milk", emoji: "🥛", level: "low" },
+          { name: "Brie", emoji: "🧀", level: "low" },
+          { name: "Butter", emoji: "🧈", level: "low" },
+          { name: "Cheddar", emoji: "🧀", level: "low" },
+          { name: "Coconut Milk", emoji: "🥥", level: "low", serving: "125ml" },
+          { name: "Cottage Cheese", emoji: "🧀", level: "moderate", serving: "2 tbsp" },
+          { name: "Cream", emoji: "🥛", level: "high" },
+          { name: "Eggs", emoji: "🥚", level: "low" },
+          { name: "Feta", emoji: "🧀", level: "low" },
+          { name: "Ice Cream", emoji: "🍦", level: "high" },
+          { name: "Lactose-Free Milk", emoji: "🥛", level: "low" },
+          { name: "Milk (Regular)", emoji: "🥛", level: "high" },
+          { name: "Mozzarella", emoji: "🧀", level: "low" },
+          { name: "Parmesan", emoji: "🧀", level: "low" },
+          { name: "Yogurt (Regular)", emoji: "🥛", level: "high" },
+          { name: "Yogurt (Lactose-Free)", emoji: "🥛", level: "low" },
+        ]
+      },
+      proteins: {
+        icon: "🍗",
+        title: "Proteins",
+        foods: [
+          { name: "Beef", emoji: "🥩", level: "low" },
+          { name: "Chicken", emoji: "🍗", level: "low" },
+          { name: "Crab", emoji: "🦀", level: "low" },
+          { name: "Fish", emoji: "🐟", level: "low" },
+          { name: "Lamb", emoji: "🍖", level: "low" },
+          { name: "Lobster", emoji: "🦞", level: "low" },
+          { name: "Pork", emoji: "🥓", level: "low" },
+          { name: "Prawns", emoji: "🦐", level: "low" },
+          { name: "Salmon", emoji: "🍣", level: "low" },
+          { name: "Sausages", emoji: "🌭", level: "moderate" },
+          { name: "Tempeh", emoji: "🫘", level: "low" },
+          { name: "Tofu (Firm)", emoji: "🧊", level: "low" },
+          { name: "Tuna", emoji: "🐟", level: "low" },
+          { name: "Turkey", emoji: "🦃", level: "low" },
+        ]
+      },
+      nuts_seeds: {
+        icon: "🥜",
+        title: "Nuts & Seeds",
+        foods: [
+          { name: "Almonds", emoji: "🌰", level: "low", serving: "10 nuts" },
+          { name: "Brazil Nuts", emoji: "🌰", level: "low", serving: "10 nuts" },
+          { name: "Cashews", emoji: "🌰", level: "high" },
+          { name: "Chia Seeds", emoji: "🫘", level: "low" },
+          { name: "Flax Seeds", emoji: "🫘", level: "low", serving: "1 tbsp" },
+          { name: "Hazelnuts", emoji: "🌰", level: "low", serving: "24 nuts" },
+          { name: "Macadamia", emoji: "🌰", level: "low", serving: "15 nuts" },
+          { name: "Peanuts", emoji: "🥜", level: "low" },
+          { name: "Pecans", emoji: "🌰", level: "low", serving: "15 halves" },
+          { name: "Pine Nuts", emoji: "🌰", level: "low" },
+          { name: "Pistachios", emoji: "🌰", level: "high" },
+          { name: "Pumpkin Seeds", emoji: "🎃", level: "low" },
+          { name: "Sunflower Seeds", emoji: "🌻", level: "low" },
+          { name: "Walnuts", emoji: "🌰", level: "low", serving: "15 halves" },
+        ]
+      },
+      legumes: {
+        icon: "🫘",
+        title: "Legumes",
+        foods: [
+          { name: "Baked Beans", emoji: "🫘", level: "high" },
+          { name: "Black Beans", emoji: "🫘", level: "moderate", serving: "¼ cup" },
+          { name: "Broad Beans", emoji: "🫘", level: "high" },
+          { name: "Chickpeas (Canned)", emoji: "🫘", level: "low", serving: "¼ cup" },
+          { name: "Hummus", emoji: "🫘", level: "high" },
+          { name: "Kidney Beans", emoji: "🫘", level: "high" },
+          { name: "Lentils (Canned)", emoji: "🫘", level: "low", serving: "¼ cup" },
+          { name: "Soybeans", emoji: "🫘", level: "high" },
+          { name: "Split Peas", emoji: "🫘", level: "high" },
+        ]
+      },
+      condiments: {
+        icon: "🧂",
+        title: "Condiments & Sweeteners",
+        foods: [
+          { name: "Agave", emoji: "🍯", level: "high" },
+          { name: "Dark Chocolate", emoji: "🍫", level: "low", serving: "5 squares" },
+          { name: "Garlic Oil", emoji: "🫒", level: "low" },
+          { name: "Honey", emoji: "🍯", level: "high" },
+          { name: "Ketchup", emoji: "🍅", level: "low", serving: "1 sachet" },
+          { name: "Maple Syrup", emoji: "🍁", level: "low" },
+          { name: "Mayonnaise", emoji: "🥫", level: "low" },
+          { name: "Miso Paste", emoji: "🥣", level: "low" },
+          { name: "Mustard", emoji: "🟡", level: "low" },
+          { name: "Olive Oil", emoji: "🫒", level: "low" },
+          { name: "Peanut Butter", emoji: "🥜", level: "low" },
+          { name: "Soy Sauce", emoji: "🥢", level: "low" },
+          { name: "Stevia", emoji: "🌿", level: "low" },
+          { name: "Sugar", emoji: "🧂", level: "low" },
+          { name: "Tahini", emoji: "🥣", level: "low", serving: "30g" },
+          { name: "Vinegar", emoji: "🍶", level: "low" },
+        ]
+      },
+      beverages: {
+        icon: "🥤",
+        title: "Beverages",
+        foods: [
+          { name: "Apple Juice", emoji: "🧃", level: "high" },
+          { name: "Beer", emoji: "🍺", level: "moderate", serving: "1 bottle" },
+          { name: "Chamomile Tea", emoji: "🍵", level: "high" },
+          { name: "Coffee", emoji: "☕", level: "low" },
+          { name: "Cranberry Juice", emoji: "🧃", level: "low", serving: "¾ cup" },
+          { name: "Green Tea", emoji: "🍵", level: "low" },
+          { name: "Kombucha", emoji: "🍵", level: "high" },
+          { name: "Orange Juice", emoji: "🍊", level: "low", serving: "100ml" },
+          { name: "Peppermint Tea", emoji: "🍵", level: "low" },
+          { name: "Water", emoji: "💧", level: "low" },
+          { name: "Wine", emoji: "🍷", level: "moderate", serving: "1 glass" },
+        ]
+      }
+    };
+
+    // Current view mode: 'category' or 'alphabetical'
+    let currentView = 'category';
+
+    // Current search query
+    let searchQuery = '';
+
+    // Current active filter (null = show all)
+    let activeFilter = null;
+
+    // Get all foods as a flat array with category info
+    function getAllFoods() {
+      const allFoods = [];
+      for (const [categoryKey, category] of Object.entries(foodData)) {
+        for (const food of category.foods) {
+          allFoods.push({
+            ...food,
+            categoryKey,
+            categoryTitle: category.title,
+            categoryIcon: category.icon
+          });
+        }
+      }
+      return allFoods.sort((a, b) => a.name.localeCompare(b.name));
+    }
+
+    // Get food details for flip card (returns null if no details available)
+    function getFoodDetails(foodName) {
+      return foodDetails[foodName] || null;
+    }
+
+    // Render the back of card content
+    function renderCardBack(food, details) {
+      if (!details) return '';
+
+      const pillsHtml = details.fodmapTypes
+        .map(type => `<span class="fodmap-pill ${type}">${type}</span>`)
+        .join('');
+
+      const reasonsHtml = details.reasons
+        .map(reason => `<li>${reason}</li>`)
+        .join('');
+
+      const alternativesHtml = details.alternatives
+        ? `<div class="back-section">
+            <div class="back-section-title">Try Instead</div>
+            <div class="alternatives-text">${details.alternatives.join(', ')}</div>
+          </div>`
+        : '';
+
+      return `
+        <div class="card-back">
+          <div class="back-header">
+            <div class="food-name">${food.name}</div>
+            <span class="fodmap-badge ${food.level}">${food.level}</span>
+          </div>
+          <div class="back-content">
+            <div class="back-section">
+              <div class="back-section-title">Contains</div>
+              <div class="fodmap-pills">${pillsHtml}</div>
+            </div>
+            <div class="back-section">
+              <div class="back-section-title">Why</div>
+              <ul class="reasons-list">${reasonsHtml}</ul>
+            </div>
+            ${alternativesHtml}
+          </div>
+        </div>
+      `;
+    }
+
+    // Render food card HTML
+    function renderFoodCard(food, showCategory = false) {
+      const details = getFoodDetails(food.name);
+      const hasDetails = details !== null;
+      const flipIndicator = hasDetails ? '<span class="flip-indicator">ⓘ</span>' : '';
+      const backHtml = hasDetails ? renderCardBack(food, details) : '';
+
+      return `
+        <div class="food-card-container ${hasDetails ? 'has-details' : ''}" data-level="${food.level}" data-name="${food.name.toLowerCase()}">
+          <div class="food-card">
+            <div class="card-front">
+              <div class="food-image">${food.emoji}</div>
+              <div class="food-info">
+                <div class="food-name">${food.name}</div>
+                <span class="fodmap-badge ${food.level}">${food.level}</span>
+                ${food.serving ? `<div class="serving-info">Safe: ${food.serving}</div>` : ''}
+                ${showCategory ? `<div class="food-category-tag">${food.categoryIcon} ${food.categoryTitle}</div>` : ''}
+              </div>
+              ${flipIndicator}
+            </div>
+            ${backHtml}
+          </div>
+        </div>
+      `;
+    }
+
+    // Render by category view
+    function renderCategoryView() {
+      const app = document.getElementById('app');
+      app.innerHTML = '';
+
+      for (const [categoryKey, category] of Object.entries(foodData)) {
+        const sortedFoods = [...category.foods].sort((a, b) =>
+          a.name.localeCompare(b.name)
+        );
+
+        const categoryHtml = `
+          <section class="category" data-category="${categoryKey}">
+            <div class="category-header">
+              <span class="category-icon">${category.icon}</span>
+              <h2 class="category-title">${category.title}</h2>
+            </div>
+            <div class="food-grid">
+              ${sortedFoods.map(food => renderFoodCard(food, false)).join('')}
+            </div>
+          </section>
+        `;
+
+        app.innerHTML += categoryHtml;
+      }
+    }
+
+    // Render alphabetical view
+    function renderAlphabeticalView() {
+      const app = document.getElementById('app');
+      app.innerHTML = '';
+
+      const allFoods = getAllFoods();
+
+      const html = `
+        <section class="category">
+          <div class="category-header">
+            <span class="category-icon">🔤</span>
+            <h2 class="category-title">All Foods (A-Z)</h2>
+          </div>
+          <div class="food-grid">
+            ${allFoods.map(food => renderFoodCard(food, true)).join('')}
+          </div>
+        </section>
+      `;
+
+      app.innerHTML = html;
+    }
+
+    // Render the app based on current view
+    function renderApp() {
+      if (currentView === 'category') {
+        renderCategoryView();
+      } else {
+        renderAlphabeticalView();
+      }
+      applyFilters();
+    }
+
+    // Set view mode
+    function setView(view) {
+      currentView = view;
+
+      // Update button states
+      document.querySelectorAll('.view-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.view === view);
+      });
+
+      renderApp();
+    }
+
+    // Handle search input
+    function handleSearch(query) {
+      searchQuery = query.toLowerCase().trim();
+
+      // Show/hide clear button
+      const clearBtn = document.getElementById('searchClear');
+      clearBtn.classList.toggle('visible', query.length > 0);
+
+      applyFilters();
+    }
+
+    // Clear search
+    function clearSearch() {
+      const searchInput = document.getElementById('searchInput');
+      searchInput.value = '';
+      searchQuery = '';
+      document.getElementById('searchClear').classList.remove('visible');
+      applyFilters();
+      searchInput.focus();
+    }
+
+    // Toggle filter when clicking legend items
+    function toggleFilter(level) {
+      const legendItems = document.querySelectorAll('.legend-item');
+      const filterHint = document.getElementById('filterHint');
+
+      // If clicking the same filter, clear it
+      if (activeFilter === level) {
+        activeFilter = null;
+        legendItems.forEach(item => item.classList.remove('active'));
+        filterHint.textContent = 'Click a category above to filter foods';
+      } else {
+        activeFilter = level;
+        legendItems.forEach(item => {
+          if (item.dataset.filter === level) {
+            item.classList.add('active');
+          } else {
+            item.classList.remove('active');
+          }
+        });
+
+        const labels = {
+          low: 'Showing: Low FODMAP foods (safe to eat)',
+          moderate: 'Showing: Moderate FODMAP foods (limit portions)',
+          high: 'Showing: High FODMAP foods (avoid or limit)'
+        };
+        filterHint.textContent = labels[level] + ' - Click again to show all';
+      }
+
+      applyFilters();
+    }
+
+    // Apply all filters (FODMAP level + search)
+    function applyFilters() {
+      const foodCards = document.querySelectorAll('.food-card-container');
+      const categories = document.querySelectorAll('.category');
+      let visibleCount = 0;
+
+      foodCards.forEach(card => {
+        const matchesLevel = activeFilter === null || card.dataset.level === activeFilter;
+        const matchesSearch = searchQuery === '' || card.dataset.name.includes(searchQuery);
+
+        if (matchesLevel && matchesSearch) {
+          card.classList.remove('hidden');
+          visibleCount++;
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+
+      // Hide categories that have no visible foods
+      categories.forEach(category => {
+        const visibleCards = category.querySelectorAll('.food-card-container:not(.hidden)');
+        if (visibleCards.length === 0) {
+          category.classList.add('hidden');
+        } else {
+          category.classList.remove('hidden');
+        }
+      });
+
+      // Show "no results" message if nothing matches
+      let noResults = document.querySelector('.no-results');
+      if (visibleCount === 0) {
+        if (!noResults) {
+          noResults = document.createElement('div');
+          noResults.className = 'no-results';
+          document.getElementById('app').appendChild(noResults);
+        }
+        noResults.textContent = `No foods found matching "${searchQuery}"`;
+        noResults.style.display = 'block';
+      } else if (noResults) {
+        noResults.style.display = 'none';
+      }
+    }
+
+    // Handle card flip on click
+    function handleCardClick(event) {
+      const container = event.target.closest('.food-card-container.has-details');
+      if (container) {
+        container.classList.toggle('flipped');
+      }
+    }
+
+    // Initialize
+    renderApp();
+
+    // Add click listener for card flips (event delegation)
+    document.getElementById('app').addEventListener('click', handleCardClick);
+  </script>
+</body>
+</html>
