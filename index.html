@@ -776,20 +776,50 @@
     // This data structure is separate for future API migration
     const foodDetails = {
       // Vegetables
+      "Artichoke": {
+        fodmapTypes: ["fructans"],
+        reasons: ["Very high in fructans", "Both globe and Jerusalem varieties"],
+        alternatives: ["Eggplant", "Zucchini", "Bell pepper"]
+      },
+      "Fennel Bulb": {
+        fodmapTypes: ["fructans"],
+        reasons: ["High in fructans", "Related to onion family"],
+        alternatives: ["Celery (small)", "Bok choy"]
+      },
       "Garlic": {
         fodmapTypes: ["fructans"],
         reasons: ["Very high in fructans", "Even small amounts trigger symptoms"],
         alternatives: ["Garlic-infused oil", "Chives", "Asafoetida"]
+      },
+      "Leek (White Part)": {
+        fodmapTypes: ["fructans"],
+        reasons: ["White part high in fructans", "Green part is safe"],
+        alternatives: ["Leek green tops", "Chives", "Scallion greens"]
       },
       "Onion": {
         fodmapTypes: ["fructans"],
         reasons: ["High fructan content", "Found in many sauces/dishes"],
         alternatives: ["Green part of spring onion", "Chives", "Garlic-infused oil"]
       },
-      "Mushrooms": {
+      "Mushrooms (Button)": {
         fodmapTypes: ["mannitol"],
-        reasons: ["High in mannitol (polyol)", "All varieties are high FODMAP"],
-        alternatives: ["Oyster mushrooms (small serve)", "Canned champignon"]
+        reasons: ["High in mannitol (polyol)", "Also called white/cremini mushrooms"],
+        alternatives: ["Oyster mushrooms", "Canned champignon (drained)"]
+      },
+      "Mushrooms (Portobello)": {
+        fodmapTypes: ["mannitol"],
+        reasons: ["High in mannitol", "Mature cremini mushrooms"],
+        alternatives: ["Oyster mushrooms", "Eggplant (for texture)"]
+      },
+      "Mushrooms (Shiitake)": {
+        fodmapTypes: ["mannitol"],
+        reasons: ["Very high in mannitol", "Even small amounts problematic"],
+        alternatives: ["Oyster mushrooms", "Dried shiitake (small amount)"]
+      },
+      "Shallots": {
+        fodmapTypes: ["fructans"],
+        reasons: ["High in fructans like onion", "Part of the allium family"],
+        alternatives: ["Chives", "Scallion greens", "Garlic-infused oil"]
       },
       "Cauliflower": {
         fodmapTypes: ["mannitol"],
@@ -1085,7 +1115,9 @@
         icon: "🥬",
         title: "Vegetables",
         foods: [
+          { name: "Artichoke", emoji: "🌿", level: "high" },
           { name: "Asparagus", emoji: "🌿", level: "high" },
+          { name: "Bean Sprouts", emoji: "🌱", level: "low" },
           { name: "Bell Pepper", emoji: "🫑", level: "low" },
           { name: "Bok Choy", emoji: "🥬", level: "low" },
           { name: "Broccoli", emoji: "🥦", level: "low", serving: "¾ cup heads" },
@@ -1093,19 +1125,36 @@
           { name: "Carrot", emoji: "🥕", level: "low" },
           { name: "Cauliflower", emoji: "🥬", level: "high" },
           { name: "Celery", emoji: "🥬", level: "moderate", serving: "<5cm stalk" },
+          { name: "Chives", emoji: "🌿", level: "low" },
+          { name: "Collard Greens", emoji: "🥬", level: "low" },
           { name: "Cucumber", emoji: "🥒", level: "low" },
           { name: "Eggplant", emoji: "🍆", level: "low", serving: "1 cup" },
+          { name: "Fennel Bulb", emoji: "🌿", level: "high" },
           { name: "Garlic", emoji: "🧄", level: "high" },
+          { name: "Ginger", emoji: "🫚", level: "low" },
           { name: "Green Beans", emoji: "🫛", level: "low" },
           { name: "Kale", emoji: "🥬", level: "low" },
+          { name: "Leek (Green Part)", emoji: "🧅", level: "low" },
+          { name: "Leek (White Part)", emoji: "🧅", level: "high" },
           { name: "Lettuce", emoji: "🥬", level: "low" },
-          { name: "Mushrooms", emoji: "🍄", level: "high" },
+          { name: "Mushrooms (Button)", emoji: "🍄", level: "high" },
+          { name: "Mushrooms (Oyster)", emoji: "🍄", level: "low", serving: "1 cup" },
+          { name: "Mushrooms (Portobello)", emoji: "🍄", level: "high" },
+          { name: "Mushrooms (Shiitake)", emoji: "🍄", level: "high" },
+          { name: "Olives", emoji: "🫒", level: "low" },
           { name: "Onion", emoji: "🧅", level: "high" },
+          { name: "Parsnip", emoji: "🥕", level: "low" },
           { name: "Potato", emoji: "🥔", level: "low" },
           { name: "Pumpkin", emoji: "🎃", level: "low", serving: "63g" },
+          { name: "Radish", emoji: "🔴", level: "low" },
+          { name: "Scallion (Green Part)", emoji: "🧅", level: "low" },
+          { name: "Shallots", emoji: "🧅", level: "high" },
           { name: "Spinach", emoji: "🥬", level: "low" },
+          { name: "Squash (Butternut)", emoji: "🎃", level: "low", serving: "¼ cup" },
           { name: "Sweet Potato", emoji: "🍠", level: "low", serving: "½ cup" },
+          { name: "Swiss Chard", emoji: "🥬", level: "low" },
           { name: "Tomato", emoji: "🍅", level: "low" },
+          { name: "Turnip", emoji: "🥔", level: "low" },
           { name: "Zucchini", emoji: "🥒", level: "low", serving: "65g" },
         ]
       },
@@ -1143,16 +1192,23 @@
           { name: "Brioche", emoji: "🍞", level: "high" },
           { name: "Buckwheat", emoji: "🌾", level: "low" },
           { name: "Corn Tortillas", emoji: "🫓", level: "low", serving: "3 pieces" },
+          { name: "Cornmeal", emoji: "🌽", level: "low" },
           { name: "Couscous", emoji: "🍚", level: "high" },
           { name: "GF Bread", emoji: "🍞", level: "low" },
           { name: "GF Pasta", emoji: "🍝", level: "low" },
+          { name: "Millet", emoji: "🌾", level: "low" },
           { name: "Oats", emoji: "🥣", level: "low", serving: "½ cup" },
+          { name: "Polenta", emoji: "🌽", level: "low" },
           { name: "Popcorn", emoji: "🍿", level: "low" },
+          { name: "Potato Starch", emoji: "🥔", level: "low" },
           { name: "Quinoa", emoji: "🍚", level: "low" },
           { name: "Rice", emoji: "🍚", level: "low" },
+          { name: "Rice Flour", emoji: "🍚", level: "low" },
           { name: "Rice Noodles", emoji: "🍜", level: "low" },
           { name: "Rye", emoji: "🍞", level: "high" },
+          { name: "Sorghum", emoji: "🌾", level: "low" },
           { name: "Sourdough (Spelt)", emoji: "🍞", level: "low" },
+          { name: "Tapioca Starch", emoji: "🥣", level: "low" },
           { name: "Challah Bread", emoji: "🍞", level: "moderate", serving: "1 slice" },
           { name: "Wheat Bread", emoji: "🍞", level: "moderate", serving: "1 slice" },
           { name: "Wheat Pasta", emoji: "🍝", level: "moderate", serving: "½ cup" },
@@ -1240,8 +1296,15 @@
         title: "Condiments & Sweeteners",
         foods: [
           { name: "Agave", emoji: "🍯", level: "high" },
+          { name: "Asafoetida", emoji: "🌿", level: "low" },
+          { name: "Balsamic Vinegar", emoji: "🍶", level: "low", serving: "1 tbsp" },
+          { name: "Brown Sugar", emoji: "🟤", level: "low" },
+          { name: "Capers", emoji: "🫒", level: "low" },
+          { name: "Coconut Oil", emoji: "🥥", level: "low" },
           { name: "Dark Chocolate", emoji: "🍫", level: "low", serving: "5 squares" },
+          { name: "Fish Sauce", emoji: "🐟", level: "low" },
           { name: "Garlic Oil", emoji: "🫒", level: "low" },
+          { name: "Herbs (Fresh)", emoji: "🌿", level: "low" },
           { name: "Honey", emoji: "🍯", level: "high" },
           { name: "Ketchup", emoji: "🍅", level: "low", serving: "1 sachet" },
           { name: "Maple Syrup", emoji: "🍁", level: "low" },
@@ -1249,12 +1312,20 @@
           { name: "Miso Paste", emoji: "🥣", level: "low" },
           { name: "Mustard", emoji: "🟡", level: "low" },
           { name: "Olive Oil", emoji: "🫒", level: "low" },
+          { name: "Oyster Sauce", emoji: "🦪", level: "low", serving: "1 tbsp" },
           { name: "Peanut Butter", emoji: "🥜", level: "low" },
+          { name: "Rice Malt Syrup", emoji: "🍚", level: "low" },
+          { name: "Salt", emoji: "🧂", level: "low" },
+          { name: "Sesame Oil", emoji: "🫒", level: "low" },
           { name: "Soy Sauce", emoji: "🥢", level: "low" },
+          { name: "Spices (Most)", emoji: "🌶️", level: "low" },
           { name: "Stevia", emoji: "🌿", level: "low" },
+          { name: "Stock (GF)", emoji: "🍲", level: "low" },
           { name: "Sugar", emoji: "🧂", level: "low" },
           { name: "Tahini", emoji: "🥣", level: "low", serving: "30g" },
+          { name: "Tamari", emoji: "🥢", level: "low" },
           { name: "Vinegar", emoji: "🍶", level: "low" },
+          { name: "Worcestershire", emoji: "🍶", level: "low", serving: "2 tbsp" },
         ]
       },
       beverages: {
