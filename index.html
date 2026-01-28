@@ -5,6 +5,51 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gut Check - FODMAP Food Guide</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:wght@600;700&display=swap');
+
+    :root {
+      /* Warm, natural color palette */
+      --color-bg: #faf9f7;
+      --color-surface: #ffffff;
+      --color-text: #2d2a26;
+      --color-text-muted: #6b6560;
+      --color-border: #e8e4df;
+
+      /* Semantic colors */
+      --color-safe: #3d9970;
+      --color-safe-bg: #e8f5e9;
+      --color-caution: #d4820a;
+      --color-caution-bg: #fff8e1;
+      --color-avoid: #c62828;
+      --color-avoid-bg: #ffebee;
+
+      /* Accent */
+      --color-accent: #5c6b4a;
+      --color-accent-light: #e8ebe4;
+
+      /* Typography */
+      --font-display: 'Fraunces', Georgia, serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+      /* Spacing */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2rem;
+      --space-2xl: 3rem;
+
+      /* Shadows */
+      --shadow-sm: 0 1px 2px rgba(45, 42, 38, 0.04);
+      --shadow-md: 0 4px 12px rgba(45, 42, 38, 0.08);
+      --shadow-lg: 0 8px 24px rgba(45, 42, 38, 0.12);
+
+      /* Transitions */
+      --transition-fast: 150ms ease;
+      --transition-normal: 250ms ease;
+      --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
     * {
       margin: 0;
       padding: 0;
@@ -12,85 +57,119 @@
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-      background: #f5f5f7;
-      color: #1d1d1f;
-      line-height: 1.5;
+      font-family: var(--font-body);
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      font-size: 15px;
+      -webkit-font-smoothing: antialiased;
     }
 
     header {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      padding: 2rem;
+      background: var(--color-surface);
+      color: var(--color-text);
+      padding: var(--space-xl) var(--space-lg);
       text-align: center;
+      border-bottom: 1px solid var(--color-border);
     }
 
     header h1 {
-      font-size: 2.5rem;
+      font-family: var(--font-display);
+      font-size: 2rem;
       font-weight: 700;
-      margin-bottom: 0.5rem;
+      margin-bottom: var(--space-xs);
+      letter-spacing: -0.02em;
+      color: var(--color-accent);
     }
 
     header p {
-      opacity: 0.9;
-      font-size: 1.1rem;
+      color: var(--color-text-muted);
+      font-size: 0.95rem;
+      font-weight: 400;
     }
 
     .legend {
       display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-md) var(--space-lg);
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .legend-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--color-text-muted);
+    }
+
+    .legend-items {
+      display: flex;
       justify-content: center;
-      gap: 2rem;
-      padding: 1rem;
-      background: white;
-      border-bottom: 1px solid #e5e5e5;
+      gap: var(--space-sm);
       flex-wrap: wrap;
+    }
+
+    .legend-text-short {
+      display: none;
     }
 
     .legend-item {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      font-size: 0.9rem;
+      gap: var(--space-sm);
+      font-size: 0.85rem;
+      font-weight: 500;
       cursor: pointer;
-      padding: 0.5rem 1rem;
-      border-radius: 25px;
-      transition: all 0.2s;
-      border: 2px solid transparent;
+      padding: var(--space-sm) var(--space-md);
+      border-radius: 100px;
+      transition: all var(--transition-normal);
+      border: 1.5px solid var(--color-border);
       user-select: none;
+      background: var(--color-surface);
     }
 
     .legend-item:hover {
-      background: #f0f0f0;
+      border-color: var(--color-text-muted);
+      transform: translateY(-1px);
     }
 
     .legend-item.active {
-      background: #e8e8e8;
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
     }
 
     .legend-item.active[data-filter="low"] {
-      border-color: #34c759;
-      background: #d4edda;
+      border-color: var(--color-safe);
+      background: var(--color-safe-bg);
+      color: var(--color-safe);
     }
 
     .legend-item.active[data-filter="moderate"] {
-      border-color: #ff9500;
-      background: #fff3cd;
+      border-color: var(--color-caution);
+      background: var(--color-caution-bg);
+      color: var(--color-caution);
     }
 
     .legend-item.active[data-filter="high"] {
-      border-color: #ff3b30;
-      background: #f8d7da;
+      border-color: var(--color-avoid);
+      background: var(--color-avoid-bg);
+      color: var(--color-avoid);
     }
 
     .legend-dot {
-      width: 12px;
-      height: 12px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
+      flex-shrink: 0;
     }
 
-    .legend-dot.low { background: #34c759; }
-    .legend-dot.moderate { background: #ff9500; }
-    .legend-dot.high { background: #ff3b30; }
+    .legend-dot.low { background: var(--color-safe); }
+    .legend-dot.moderate { background: var(--color-caution); }
+    .legend-dot.high { background: var(--color-avoid); }
 
     .food-card-container.hidden {
       display: none;
@@ -102,18 +181,19 @@
 
     .filter-hint {
       text-align: center;
-      padding: 0.5rem;
+      padding: var(--space-sm) var(--space-md);
       font-size: 0.8rem;
-      color: #86868b;
-      background: #f5f5f7;
+      color: var(--color-text-muted);
+      background: var(--color-bg);
+      border-bottom: 1px solid var(--color-border);
     }
 
     .controls {
-      background: white;
-      padding: 1rem 2rem;
-      border-bottom: 1px solid #e5e5e5;
+      background: var(--color-surface);
+      padding: var(--space-md) var(--space-lg);
+      border-bottom: 1px solid var(--color-border);
       display: flex;
-      gap: 1rem;
+      gap: var(--space-md);
       align-items: center;
       justify-content: center;
       flex-wrap: wrap;
@@ -122,53 +202,62 @@
     .search-container {
       position: relative;
       flex: 1;
-      max-width: 400px;
+      max-width: 360px;
       min-width: 200px;
     }
 
     .search-input {
       width: 100%;
-      padding: 0.75rem 1rem 0.75rem 2.75rem;
-      border: 2px solid #e5e5e5;
-      border-radius: 25px;
-      font-size: 1rem;
+      padding: 0.625rem 1rem 0.625rem 2.5rem;
+      border: 1.5px solid var(--color-border);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-family: var(--font-body);
       outline: none;
-      transition: border-color 0.2s;
+      transition: all var(--transition-normal);
+      background: var(--color-bg);
     }
 
     .search-input:focus {
-      border-color: #667eea;
+      border-color: var(--color-accent);
+      background: var(--color-surface);
+      box-shadow: 0 0 0 3px var(--color-accent-light);
+    }
+
+    .search-input::placeholder {
+      color: var(--color-text-muted);
     }
 
     .search-icon {
       position: absolute;
-      left: 1rem;
+      left: 0.875rem;
       top: 50%;
       transform: translateY(-50%);
-      color: #86868b;
-      font-size: 1rem;
+      color: var(--color-text-muted);
+      font-size: 0.9rem;
+      pointer-events: none;
     }
 
     .search-clear {
       position: absolute;
-      right: 1rem;
+      right: 0.75rem;
       top: 50%;
       transform: translateY(-50%);
-      color: #86868b;
-      font-size: 1.2rem;
+      color: var(--color-text-muted);
+      font-size: 1rem;
       cursor: pointer;
-      width: 24px;
-      height: 24px;
+      width: 22px;
+      height: 22px;
       display: none;
       align-items: center;
       justify-content: center;
       border-radius: 50%;
-      transition: all 0.2s;
+      transition: all var(--transition-fast);
     }
 
     .search-clear:hover {
-      background: #e5e5e5;
-      color: #1d1d1f;
+      background: var(--color-border);
+      color: var(--color-text);
     }
 
     .search-clear.visible {
@@ -177,165 +266,183 @@
 
     .view-toggle {
       display: flex;
-      gap: 0.5rem;
+      gap: 2px;
+      background: var(--color-bg);
+      padding: 3px;
+      border-radius: 8px;
+      border: 1px solid var(--color-border);
     }
 
     .view-btn {
-      padding: 0.6rem 1.2rem;
-      border: 2px solid #e5e5e5;
-      background: white;
-      border-radius: 25px;
-      font-size: 0.9rem;
+      padding: 0.5rem 1rem;
+      border: none;
+      background: transparent;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-family: var(--font-body);
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all var(--transition-fast);
       font-weight: 500;
+      color: var(--color-text-muted);
     }
 
     .view-btn:hover {
-      background: #f0f0f0;
+      color: var(--color-text);
     }
 
     .view-btn.active {
-      border-color: #667eea;
-      background: #667eea;
-      color: white;
+      background: var(--color-surface);
+      color: var(--color-text);
+      box-shadow: var(--shadow-sm);
     }
 
     .no-results {
       text-align: center;
-      padding: 3rem;
-      color: #86868b;
-      font-size: 1.1rem;
+      padding: var(--space-2xl);
+      color: var(--color-text-muted);
+      font-size: 1rem;
     }
 
     .food-category-tag {
       font-size: 0.7rem;
-      color: #86868b;
-      margin-top: 0.25rem;
+      color: var(--color-text-muted);
+      margin-top: var(--space-xs);
     }
 
     main {
-      max-width: 1400px;
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 2rem;
+      padding: var(--space-xl);
     }
 
     .category {
-      margin-bottom: 3rem;
+      margin-bottom: var(--space-2xl);
     }
 
     .category-header {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 1.5rem;
-      padding-bottom: 0.75rem;
-      border-bottom: 2px solid #e5e5e5;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-lg);
+      padding-bottom: var(--space-sm);
+      border-bottom: 1px solid var(--color-border);
     }
 
     .category-icon {
-      font-size: 1.75rem;
+      font-size: 1.5rem;
     }
 
     .category-title {
-      font-size: 1.5rem;
+      font-family: var(--font-display);
+      font-size: 1.25rem;
       font-weight: 600;
-      color: #1d1d1f;
+      color: var(--color-text);
+      letter-spacing: -0.01em;
     }
 
     .food-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: var(--space-md);
     }
 
     .food-card-container {
-      border-radius: 16px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      transition: box-shadow 0.2s;
+      border-radius: 12px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      transition: all var(--transition-normal);
     }
 
     .food-card-container:hover {
-      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      border-color: transparent;
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
     }
 
     .food-card {
-      background: white;
-      border-radius: 16px;
+      background: var(--color-surface);
+      border-radius: 12px;
       overflow: hidden;
     }
 
     .food-image {
       width: 100%;
-      height: 120px;
-      object-fit: cover;
-      background: #f0f0f0;
+      height: 100px;
+      background: linear-gradient(135deg, var(--color-bg) 0%, var(--color-border) 100%);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 3rem;
+      font-size: 2.5rem;
+      transition: transform var(--transition-slow);
+    }
+
+    .food-card-container:hover .food-image {
+      transform: scale(1.05);
     }
 
     .food-info {
-      padding: 1rem;
+      padding: var(--space-md);
     }
 
     .food-name {
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: #1d1d1f;
+      margin-bottom: var(--space-sm);
+      color: var(--color-text);
+      line-height: 1.3;
     }
 
     .fodmap-badge {
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      padding: 0.35rem 0.75rem;
-      border-radius: 20px;
-      font-size: 0.75rem;
+      gap: 0.35rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.7rem;
       font-weight: 600;
       text-transform: uppercase;
+      letter-spacing: 0.03em;
       letter-spacing: 0.5px;
     }
 
     .fodmap-badge.low {
-      background: #d4edda;
-      color: #155724;
+      background: var(--color-safe-bg);
+      color: var(--color-safe);
     }
 
     .fodmap-badge.moderate {
-      background: #fff3cd;
-      color: #856404;
+      background: var(--color-caution-bg);
+      color: var(--color-caution);
     }
 
     .fodmap-badge.high {
-      background: #f8d7da;
-      color: #721c24;
+      background: var(--color-avoid-bg);
+      color: var(--color-avoid);
     }
 
     .fodmap-badge::before {
       content: '';
-      width: 8px;
-      height: 8px;
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
     }
 
-    .fodmap-badge.low::before { background: #34c759; }
-    .fodmap-badge.moderate::before { background: #ff9500; }
-    .fodmap-badge.high::before { background: #ff3b30; }
+    .fodmap-badge.low::before { background: var(--color-safe); }
+    .fodmap-badge.moderate::before { background: var(--color-caution); }
+    .fodmap-badge.high::before { background: var(--color-avoid); }
 
     .serving-info {
-      margin-top: 0.5rem;
-      font-size: 0.75rem;
-      color: #86868b;
+      margin-top: var(--space-sm);
+      font-size: 0.72rem;
+      color: var(--color-text-muted);
+      font-weight: 500;
     }
 
     /* Flip Card Styles - Show/Hide approach for better compatibility */
     .food-card-container.has-details .card-back {
       display: none;
-      background: white;
-      border-radius: 16px;
+      background: var(--color-surface);
+      border-radius: 12px;
       overflow: hidden;
     }
 
@@ -349,28 +456,28 @@
     }
 
     .back-header {
-      padding: 0.75rem 1rem;
+      padding: var(--space-sm) var(--space-md);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid #e5e5e5;
-      background: #f5f5f7;
+      border-bottom: 1px solid var(--color-border);
+      background: var(--color-bg);
     }
 
     .back-header .food-name {
       margin: 0;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
     }
 
     .back-content {
-      padding: 0.75rem 1rem;
+      padding: var(--space-sm) var(--space-md);
       flex: 1;
       overflow-y: auto;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
     }
 
     .back-section {
-      margin-bottom: 0.75rem;
+      margin-bottom: var(--space-sm);
     }
 
     .back-section:last-child {
@@ -379,32 +486,33 @@
 
     .back-section-title {
       font-weight: 600;
-      color: #86868b;
-      font-size: 0.7rem;
+      color: var(--color-text-muted);
+      font-size: 0.65rem;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      margin-bottom: 0.35rem;
+      margin-bottom: var(--space-xs);
     }
 
     .fodmap-pills {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.35rem;
+      gap: var(--space-xs);
     }
 
     .fodmap-pill {
-      padding: 0.2rem 0.5rem;
-      border-radius: 12px;
-      font-size: 0.7rem;
-      font-weight: 500;
+      padding: 0.15rem 0.45rem;
+      border-radius: 100px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
     }
 
-    .fodmap-pill.fructans { background: #fce4ec; color: #c2185b; }
-    .fodmap-pill.lactose { background: #e3f2fd; color: #1565c0; }
-    .fodmap-pill.fructose { background: #fff3e0; color: #ef6c00; }
-    .fodmap-pill.gos { background: #e8f5e9; color: #2e7d32; }
-    .fodmap-pill.sorbitol { background: #f3e5f5; color: #7b1fa2; }
-    .fodmap-pill.mannitol { background: #e0f7fa; color: #00838f; }
+    .fodmap-pill.fructans { background: #fce8ec; color: #a11f4a; }
+    .fodmap-pill.lactose { background: #e5f1fb; color: #1565c0; }
+    .fodmap-pill.fructose { background: #fef3e6; color: #c65a00; }
+    .fodmap-pill.gos { background: #e8f4ea; color: #2e7d32; }
+    .fodmap-pill.sorbitol { background: #f3e8f8; color: #7b1fa2; }
+    .fodmap-pill.mannitol { background: #e4f6f8; color: #00727a; }
 
     .reasons-list {
       list-style: none;
@@ -414,35 +522,38 @@
 
     .reasons-list li {
       position: relative;
-      padding-left: 0.9rem;
-      margin-bottom: 0.2rem;
-      color: #1d1d1f;
+      padding-left: 0.85rem;
+      margin-bottom: 0.15rem;
+      color: var(--color-text);
+      line-height: 1.4;
     }
 
     .reasons-list li::before {
       content: '•';
       position: absolute;
       left: 0;
-      color: #ff3b30;
+      color: var(--color-avoid);
     }
 
     .alternatives-text {
-      color: #34c759;
-      font-weight: 500;
+      color: var(--color-safe);
+      font-weight: 600;
+      line-height: 1.4;
     }
 
     .flip-indicator {
       position: absolute;
-      bottom: 0.5rem;
-      right: 0.5rem;
-      font-size: 0.85rem;
-      opacity: 0.4;
-      transition: opacity 0.2s;
+      bottom: var(--space-sm);
+      right: var(--space-sm);
+      font-size: 0.8rem;
+      opacity: 0.35;
+      transition: all var(--transition-normal);
       cursor: pointer;
     }
 
     .food-card-container:hover .flip-indicator {
-      opacity: 0.8;
+      opacity: 0.7;
+      transform: scale(1.1);
     }
 
     .food-card-container.has-details {
@@ -451,27 +562,101 @@
 
     footer {
       text-align: center;
-      padding: 2rem;
-      color: #86868b;
+      padding: var(--space-2xl) var(--space-lg);
+      color: var(--color-text-muted);
       font-size: 0.85rem;
+      border-top: 1px solid var(--color-border);
+      background: var(--color-surface);
     }
 
     footer a {
-      color: #667eea;
+      color: var(--color-accent);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color var(--transition-fast);
+    }
+
+    footer a:hover {
+      color: var(--color-text);
+      text-decoration: underline;
     }
 
     @media (max-width: 600px) {
+      header {
+        padding: var(--space-lg) var(--space-md);
+      }
+
       header h1 {
-        font-size: 1.75rem;
+        font-size: 1.6rem;
+      }
+
+      header p {
+        font-size: 0.875rem;
+      }
+
+      .legend {
+        gap: var(--space-xs);
+        padding: var(--space-sm) var(--space-md);
+      }
+
+      .legend-items {
+        gap: var(--space-xs);
+      }
+
+      .legend-item {
+        padding: var(--space-xs) var(--space-sm);
+        font-size: 0.75rem;
+      }
+
+      .legend-text-long {
+        display: none;
+      }
+
+      .legend-text-short {
+        display: inline;
+      }
+
+      .controls {
+        padding: var(--space-sm) var(--space-md);
+      }
+
+      main {
+        padding: var(--space-md);
       }
 
       .food-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 0.75rem;
+        gap: var(--space-sm);
       }
 
-      .legend {
-        gap: 1rem;
+      .food-image {
+        height: 80px;
+        font-size: 2rem;
+      }
+
+      .food-info {
+        padding: var(--space-sm);
+      }
+
+      .food-name {
+        font-size: 0.82rem;
+      }
+
+      .fodmap-badge {
+        font-size: 0.62rem;
+        padding: 0.2rem 0.5rem;
+      }
+
+      .category-header {
+        margin-bottom: var(--space-md);
+      }
+
+      .category-title {
+        font-size: 1.1rem;
+      }
+
+      footer {
+        padding: var(--space-xl) var(--space-md);
       }
     }
   </style>
@@ -483,17 +668,23 @@
   </header>
 
   <div class="legend">
-    <div class="legend-item" data-filter="low" onclick="toggleFilter('low')">
-      <div class="legend-dot low"></div>
-      <span>Low FODMAP - Safe</span>
-    </div>
-    <div class="legend-item" data-filter="moderate" onclick="toggleFilter('moderate')">
-      <div class="legend-dot moderate"></div>
-      <span>Moderate - Limit Portions</span>
-    </div>
-    <div class="legend-item" data-filter="high" onclick="toggleFilter('high')">
-      <div class="legend-dot high"></div>
-      <span>High FODMAP - Avoid</span>
+    <div class="legend-label">FODMAP Levels</div>
+    <div class="legend-items">
+      <div class="legend-item" data-filter="low" onclick="toggleFilter('low')">
+        <div class="legend-dot low"></div>
+        <span class="legend-text-long">Low FODMAP - Safe</span>
+        <span class="legend-text-short">Low - Safe</span>
+      </div>
+      <div class="legend-item" data-filter="moderate" onclick="toggleFilter('moderate')">
+        <div class="legend-dot moderate"></div>
+        <span class="legend-text-long">Moderate - Limit Portions</span>
+        <span class="legend-text-short">Moderate - Limit</span>
+      </div>
+      <div class="legend-item" data-filter="high" onclick="toggleFilter('high')">
+        <div class="legend-dot high"></div>
+        <span class="legend-text-long">High FODMAP - Avoid</span>
+        <span class="legend-text-short">High - Avoid</span>
+      </div>
     </div>
   </div>
   <div class="filter-hint" id="filterHint">Click a category above to filter foods</div>
@@ -1001,7 +1192,12 @@
       const app = document.getElementById('app');
       app.innerHTML = '';
 
-      for (const [categoryKey, category] of Object.entries(foodData)) {
+      // Sort categories alphabetically by title
+      const sortedCategories = Object.entries(foodData).sort((a, b) =>
+        a[1].title.localeCompare(b[1].title)
+      );
+
+      for (const [categoryKey, category] of sortedCategories) {
         const sortedFoods = [...category.foods].sort((a, b) =>
           a.name.localeCompare(b.name)
         );
@@ -1032,7 +1228,6 @@
       const html = `
         <section class="category">
           <div class="category-header">
-            <span class="category-icon">🔤</span>
             <h2 class="category-title">All Foods (A-Z)</h2>
           </div>
           <div class="food-grid">
