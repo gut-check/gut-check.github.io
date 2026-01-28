@@ -331,41 +331,19 @@
       color: #86868b;
     }
 
-    /* Flip Card Styles */
-    .food-card-container {
-      perspective: 1000px;
-    }
-
-    .food-card {
-      position: relative;
-      transform-style: preserve-3d;
-      transition: transform 0.6s;
-    }
-
-    .food-card-container.flipped .food-card {
-      transform: rotateY(180deg);
-    }
-
-    .card-front,
-    .card-back {
-      backface-visibility: hidden;
-      -webkit-backface-visibility: hidden;
-    }
-
-    .card-front {
-      position: relative;
-    }
-
-    .card-back {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      transform: rotateY(180deg);
+    /* Flip Card Styles - Show/Hide approach for better compatibility */
+    .food-card-container.has-details .card-back {
+      display: none;
       background: white;
       border-radius: 16px;
       overflow: hidden;
+    }
+
+    .food-card-container.has-details.flipped .card-front {
+      display: none;
+    }
+
+    .food-card-container.has-details.flipped .card-back {
       display: flex;
       flex-direction: column;
     }
@@ -712,6 +690,11 @@
         fodmapTypes: ["fructose", "fructans"],
         reasons: ["Fermented with sugar", "May contain high FODMAP ingredients"],
         alternatives: ["Water kefir", "Plain water", "Green tea"]
+      },
+      "Anise Tea": {
+        fodmapTypes: ["fructans"],
+        reasons: ["Anise seeds contain fructans", "Similar to fennel (high FODMAP)"],
+        alternatives: ["Ginger tea", "Peppermint tea", "Lemon thyme tea"]
       }
     };
 
@@ -897,13 +880,18 @@
         icon: "🥤",
         title: "Beverages",
         foods: [
+          { name: "Anise Tea", emoji: "🍵", level: "high" },
           { name: "Apple Juice", emoji: "🧃", level: "high" },
           { name: "Beer", emoji: "🍺", level: "moderate", serving: "1 bottle" },
+          { name: "Bergamot Tea", emoji: "🍵", level: "low" },
+          { name: "Blackberry Leaf Tea", emoji: "🍵", level: "low" },
           { name: "Chamomile Tea", emoji: "🍵", level: "high" },
           { name: "Coffee", emoji: "☕", level: "low" },
           { name: "Cranberry Juice", emoji: "🧃", level: "low", serving: "¾ cup" },
+          { name: "Ginger Tea", emoji: "🍵", level: "low" },
           { name: "Green Tea", emoji: "🍵", level: "low" },
           { name: "Kombucha", emoji: "🍵", level: "high" },
+          { name: "Lemon Thyme Tea", emoji: "🍵", level: "low" },
           { name: "Orange Juice", emoji: "🍊", level: "low", serving: "100ml" },
           { name: "Peppermint Tea", emoji: "🍵", level: "low" },
           { name: "Water", emoji: "💧", level: "low" },
