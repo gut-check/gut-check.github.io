@@ -175,7 +175,8 @@
     .legend-dot.moderate { background: var(--color-caution); }
     .legend-dot.high { background: var(--color-avoid); }
 
-    .food-card-container.hidden {
+    .food-card-container.hidden,
+    .food-list-item.hidden {
       display: none;
     }
 
@@ -244,14 +245,14 @@
 
     .search-clear {
       position: absolute;
-      right: 0.75rem;
+      right: 0.5rem;
       top: 50%;
       transform: translateY(-50%);
       color: var(--color-text-muted);
-      font-size: 1rem;
+      font-size: 1.1rem;
       cursor: pointer;
-      width: 22px;
-      height: 22px;
+      width: 32px;
+      height: 32px;
       display: none;
       align-items: center;
       justify-content: center;
@@ -350,6 +351,55 @@
       gap: var(--space-md);
     }
 
+    /* List View Styles */
+    .food-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .food-list-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-sm) var(--space-md);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      transition: all var(--transition-fast);
+    }
+
+    .food-list-item:hover {
+      border-color: transparent;
+      box-shadow: var(--shadow-md);
+    }
+
+    .food-list-item .list-emoji {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .food-list-item .list-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .food-list-item .list-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--color-text);
+    }
+
+    .food-list-item .list-serving {
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+      margin-top: 2px;
+    }
+
+    .food-list-item .fodmap-badge {
+      flex-shrink: 0;
+    }
+
     .food-card-container {
       border-radius: 12px;
       background: var(--color-surface);
@@ -366,7 +416,7 @@
     .food-card {
       background: var(--color-surface);
       border-radius: 12px;
-      overflow: hidden;
+      position: relative;
     }
 
     .food-image {
@@ -442,12 +492,19 @@
       font-weight: 500;
     }
 
-    /* Flip Card Styles - Show/Hide approach for better compatibility */
+    /* Flip Card Styles - Simple show/hide with smooth transition */
+    .card-front {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+    }
+
     .food-card-container.has-details .card-back {
       display: none;
       background: var(--color-surface);
       border-radius: 12px;
       overflow: hidden;
+      flex-direction: column;
     }
 
     .food-card-container.has-details.flipped .card-front {
@@ -456,7 +513,6 @@
 
     .food-card-container.has-details.flipped .card-back {
       display: flex;
-      flex-direction: column;
     }
 
     .back-header {
@@ -702,6 +758,7 @@
     <div class="view-toggle">
       <button class="view-btn active" data-view="category" onclick="setView('category')">By Category</button>
       <button class="view-btn" data-view="alphabetical" onclick="setView('alphabetical')">A-Z</button>
+      <button class="view-btn" data-view="list" onclick="setView('list')">List</button>
     </div>
   </div>
 
@@ -1417,10 +1474,47 @@
       app.innerHTML = html;
     }
 
+    // Render list item for compact list view
+    function renderListItem(food) {
+      return `
+        <div class="food-list-item" data-level="${food.level}" data-name="${food.name.toLowerCase()}">
+          <span class="list-emoji">${food.emoji}</span>
+          <div class="list-info">
+            <div class="list-name">${food.name}</div>
+            ${food.serving ? `<div class="list-serving">Safe: ${food.serving}</div>` : ''}
+          </div>
+          <span class="fodmap-badge ${food.level}">${food.level}</span>
+        </div>
+      `;
+    }
+
+    // Render compact list view
+    function renderListView() {
+      const app = document.getElementById('app');
+      app.innerHTML = '';
+
+      const allFoods = getAllFoods();
+
+      const html = `
+        <section class="category">
+          <div class="category-header">
+            <h2 class="category-title">All Foods (A-Z)</h2>
+          </div>
+          <div class="food-list">
+            ${allFoods.map(food => renderListItem(food)).join('')}
+          </div>
+        </section>
+      `;
+
+      app.innerHTML = html;
+    }
+
     // Render the app based on current view
     function renderApp() {
       if (currentView === 'category') {
         renderCategoryView();
+      } else if (currentView === 'list') {
+        renderListView();
       } else {
         renderAlphabeticalView();
       }
@@ -1494,9 +1588,11 @@
     // Apply all filters (FODMAP level + search)
     function applyFilters() {
       const foodCards = document.querySelectorAll('.food-card-container');
+      const foodListItems = document.querySelectorAll('.food-list-item');
       const categories = document.querySelectorAll('.category');
       let visibleCount = 0;
 
+      // Filter card view items
       foodCards.forEach(card => {
         const matchesLevel = activeFilter === null || card.dataset.level === activeFilter;
         const matchesSearch = searchQuery === '' || card.dataset.name.includes(searchQuery);
@@ -1509,9 +1605,22 @@
         }
       });
 
+      // Filter list view items
+      foodListItems.forEach(item => {
+        const matchesLevel = activeFilter === null || item.dataset.level === activeFilter;
+        const matchesSearch = searchQuery === '' || item.dataset.name.includes(searchQuery);
+
+        if (matchesLevel && matchesSearch) {
+          item.classList.remove('hidden');
+          visibleCount++;
+        } else {
+          item.classList.add('hidden');
+        }
+      });
+
       // Hide categories that have no visible foods
       categories.forEach(category => {
-        const visibleCards = category.querySelectorAll('.food-card-container:not(.hidden)');
+        const visibleCards = category.querySelectorAll('.food-card-container:not(.hidden), .food-list-item:not(.hidden)');
         if (visibleCards.length === 0) {
           category.classList.add('hidden');
         } else {
