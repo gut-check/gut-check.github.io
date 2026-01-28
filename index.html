@@ -709,7 +709,7 @@
   </footer>
 
   <script>
-    // Detailed FODMAP info for high FODMAP foods (for flip cards)
+    // Detailed FODMAP info for high and moderate FODMAP foods (for flip cards)
     // This data structure is separate for future API migration
     const foodDetails = {
       // Vegetables
@@ -886,6 +886,63 @@
         fodmapTypes: ["fructans"],
         reasons: ["Anise seeds contain fructans", "Similar to fennel (high FODMAP)"],
         alternatives: ["Ginger tea", "Peppermint tea", "Lemon thyme tea"]
+      },
+
+      // Moderate FODMAP foods
+      "Celery": {
+        fodmapTypes: ["mannitol"],
+        reasons: ["Contains mannitol", "Safe in small amounts (<5cm)"],
+        alternatives: ["Cucumber", "Bell pepper"]
+      },
+      "Avocado": {
+        fodmapTypes: ["sorbitol"],
+        reasons: ["Contains sorbitol", "⅛ avocado is low FODMAP"],
+        alternatives: ["Small portion only", "Olives"]
+      },
+      "Banana (Ripe)": {
+        fodmapTypes: ["fructans"],
+        reasons: ["Ripening increases fructans", "Unripe bananas are low FODMAP"],
+        alternatives: ["Unripe/firm banana", "Oranges"]
+      },
+      "Challah Bread": {
+        fodmapTypes: ["fructans"],
+        reasons: ["Contains wheat flour", "1 slice is moderate"],
+        alternatives: ["Sourdough spelt", "GF bread"]
+      },
+      "Wheat Bread": {
+        fodmapTypes: ["fructans"],
+        reasons: ["Wheat contains fructans", "Portion size matters"],
+        alternatives: ["Sourdough spelt", "GF bread"]
+      },
+      "Wheat Pasta": {
+        fodmapTypes: ["fructans"],
+        reasons: ["Wheat-based (fructans)", "½ cup cooked is moderate"],
+        alternatives: ["GF pasta", "Rice noodles"]
+      },
+      "Cottage Cheese": {
+        fodmapTypes: ["lactose"],
+        reasons: ["Contains lactose", "2 tbsp is moderate"],
+        alternatives: ["Lactose-free cottage cheese", "Feta"]
+      },
+      "Sausages": {
+        fodmapTypes: ["fructans", "gos"],
+        reasons: ["Often contain onion/garlic", "Check ingredients"],
+        alternatives: ["Plain meat", "GF sausages"]
+      },
+      "Black Beans": {
+        fodmapTypes: ["gos"],
+        reasons: ["Contains GOS", "¼ cup canned is moderate"],
+        alternatives: ["Firm tofu", "Canned lentils (small)"]
+      },
+      "Beer": {
+        fodmapTypes: ["fructans"],
+        reasons: ["Made from barley/wheat", "1 bottle is moderate"],
+        alternatives: ["Gluten-free beer", "Wine (1 glass)"]
+      },
+      "Wine": {
+        fodmapTypes: ["fructose"],
+        reasons: ["Contains some fructose", "Dry wines lower"],
+        alternatives: ["Dry red/white wine", "Spirits (plain)"]
       }
     };
 
