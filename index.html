@@ -943,6 +943,31 @@
         fodmapTypes: ["fructose"],
         reasons: ["Contains some fructose", "Dry wines lower"],
         alternatives: ["Dry red/white wine", "Spirits (plain)"]
+      },
+      "Wine (Sweet)": {
+        fodmapTypes: ["fructose"],
+        reasons: ["Higher residual sugar", "Sweeter = more fructose"],
+        alternatives: ["Dry red/white wine", "Sparkling wine (brut)"]
+      },
+      "Mango Juice": {
+        fodmapTypes: ["fructose"],
+        reasons: ["High fructose from mangoes", "Concentrated fruit sugars"],
+        alternatives: ["Orange juice (small)", "Cranberry juice"]
+      },
+      "Pear Juice": {
+        fodmapTypes: ["fructose", "sorbitol"],
+        reasons: ["Very high fructose", "Contains sorbitol"],
+        alternatives: ["Orange juice", "Cranberry juice"]
+      },
+      "Oolong Tea": {
+        fodmapTypes: ["fructans"],
+        reasons: ["Moderate fructan content", "Strong brews worse"],
+        alternatives: ["Green tea", "White tea", "Peppermint tea"]
+      },
+      "Port Wine": {
+        fodmapTypes: ["fructose"],
+        reasons: ["Fortified wine with residual sugar", "Higher fructose than dry wines"],
+        alternatives: ["Dry red wine", "Whiskey", "Brandy"]
       }
     };
 
@@ -1130,20 +1155,49 @@
         foods: [
           { name: "Anise Tea", emoji: "🍵", level: "high" },
           { name: "Apple Juice", emoji: "🧃", level: "high" },
-          { name: "Beer", emoji: "🍺", level: "moderate", serving: "1 bottle" },
           { name: "Bergamot Tea", emoji: "🍵", level: "low" },
           { name: "Blackberry Leaf Tea", emoji: "🍵", level: "low" },
+          { name: "Black Tea", emoji: "🍵", level: "low", serving: "weak brew" },
+          { name: "Chai Tea (weak)", emoji: "🍵", level: "low", serving: "weak brew" },
           { name: "Chamomile Tea", emoji: "🍵", level: "high" },
+          { name: "Coconut Water", emoji: "🥥", level: "low", serving: "100ml" },
           { name: "Coffee", emoji: "☕", level: "low" },
           { name: "Cranberry Juice", emoji: "🧃", level: "low", serving: "¾ cup" },
+          { name: "Espresso", emoji: "☕", level: "low" },
           { name: "Ginger Tea", emoji: "🍵", level: "low" },
           { name: "Green Tea", emoji: "🍵", level: "low" },
           { name: "Kombucha", emoji: "🍵", level: "high" },
           { name: "Lemon Thyme Tea", emoji: "🍵", level: "low" },
+          { name: "Mango Juice", emoji: "🧃", level: "high" },
+          { name: "Oolong Tea", emoji: "🍵", level: "high" },
           { name: "Orange Juice", emoji: "🍊", level: "low", serving: "100ml" },
+          { name: "Pear Juice", emoji: "🧃", level: "high" },
           { name: "Peppermint Tea", emoji: "🍵", level: "low" },
+          { name: "Rooibos Tea", emoji: "🍵", level: "low" },
           { name: "Water", emoji: "💧", level: "low" },
-          { name: "Wine", emoji: "🍷", level: "moderate", serving: "1 glass" },
+          { name: "White Tea", emoji: "🍵", level: "low" },
+        ]
+      },
+      alcohol: {
+        icon: "🍷",
+        title: "Alcoholic Beverages",
+        foods: [
+          { name: "Beer", emoji: "🍺", level: "moderate", serving: "1 bottle" },
+          { name: "Beer (Gluten-Free)", emoji: "🍺", level: "low" },
+          { name: "Brandy", emoji: "🥃", level: "low" },
+          { name: "Champagne", emoji: "🥂", level: "low", serving: "1 glass" },
+          { name: "Gin", emoji: "🍸", level: "low" },
+          { name: "Port Wine", emoji: "🍷", level: "moderate", serving: "1 small glass" },
+          { name: "Rum", emoji: "🥃", level: "low" },
+          { name: "Sherry (Dry)", emoji: "🍷", level: "low", serving: "1 small glass" },
+          { name: "Sparkling Wine", emoji: "🥂", level: "low", serving: "1 glass" },
+          { name: "Tequila", emoji: "🥃", level: "low" },
+          { name: "Vodka", emoji: "🍸", level: "low" },
+          { name: "Whiskey", emoji: "🥃", level: "low" },
+          { name: "Wine (Red, Dry)", emoji: "🍷", level: "low", serving: "1 glass" },
+          { name: "Wine (White, Dry)", emoji: "🍷", level: "low", serving: "1 glass" },
+          { name: "Wine (Rosé, Dry)", emoji: "🍷", level: "low", serving: "1 glass" },
+          { name: "Wine (Sweet)", emoji: "🍷", level: "moderate", serving: "1 glass" },
         ]
       }
     };
