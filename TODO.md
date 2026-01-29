@@ -1,0 +1,104 @@
+# FODMAP App - Future Improvements
+
+## Phase 2: Additional Common Foods (~30 items)
+
+### Vegetables
+- [ ] Water chestnuts (low)
+- [ ] Bamboo shoots (low)
+- [ ] Celeriac (high - different from celery)
+- [ ] Rutabaga (low)
+- [ ] Romaine lettuce (low)
+- [ ] Iceberg lettuce (low)
+- [ ] Endive (low)
+- [ ] Okra (low)
+- [ ] Jicama (low)
+- [ ] Hearts of palm (low)
+
+### Fruits
+- [ ] Figs fresh (moderate)
+- [ ] Figs dried (high)
+- [ ] Lychee (moderate)
+- [ ] Longan (moderate)
+- [ ] Dragon fruit (low)
+- [ ] Pomegranate (low, small serve)
+- [ ] Guava (low)
+- [ ] Persimmon (high)
+- [ ] Rhubarb (low)
+- [ ] Coconut fresh meat (low)
+
+### Proteins
+- [ ] Lamb (low)
+- [ ] Duck (low)
+- [ ] Turkey (low)
+- [ ] Venison (low)
+- [ ] Crab (low)
+- [ ] Lobster (low)
+- [ ] Oysters (low)
+- [ ] Mussels (low)
+- [ ] Scallops (low)
+
+### Grains
+- [ ] Spelt flour (moderate)
+- [ ] Kamut (high)
+- [ ] Amaranth (low)
+- [ ] Teff (low)
+
+### Dairy Alternatives
+- [ ] Oat milk (low, small serve)
+- [ ] Rice milk (low)
+- [ ] Hemp milk (low)
+
+### Legumes - Lentil Varieties (Priority)
+
+Expand current "Lentils (Canned)" to show all varieties with portion-dependent ratings:
+
+| Lentil Type          | Low FODMAP Serving | Notes                        |
+| -------------------- | ------------------ | ---------------------------- |
+| Canned (Brown/Green) | ¼ cup (46g)        | Safest - rinsing removes GOS |
+| Red Lentils (boiled) | 23g only           | Higher GOS + fructans        |
+| Green/Brown (boiled) | 29g (~¼ cup)       | Moderate GOS                 |
+| Le Puy/French Green  | ¼ cup (46g)        | Similar to canned            |
+
+**Key info for flip cards:**
+
+- All lentils contain GOS (galacto-oligosaccharides)
+- Canned & rinsed = lower FODMAPs (compounds dissolve in water)
+- Boiled from dry = higher FODMAPs
+- Stick to ¼ cup (45-60g) max portions
+- Add portion guide visualization (🟢 🟡 🔴)
+
+Foods to add:
+
+- [ ] Lentils (Red, Boiled) - low at 23g, moderate at 46g, high at 75g+
+- [ ] Lentils (Green/Brown, Boiled) - low at 29g, moderate at 50g
+- [ ] Lentils (Le Puy/French) - low at 46g
+- [ ] Update existing "Lentils (Canned)" with portions field
+
+### Prepared Foods
+- [ ] Pizza (depends on crust)
+- [ ] Gyoza/dumplings (check filling)
+- [ ] Spring rolls (check filling)
+- [ ] Pad Thai (check sauce)
+
+---
+
+## Feature Ideas
+
+### Data Improvements
+- [ ] Add `portions` field to all portion-dependent foods
+- [ ] Add flip card details to ALL foods (not just high FODMAP)
+- [ ] Add food photos instead of emojis
+- [ ] Add barcode scanning integration
+
+### UI Improvements
+- [ ] Dark mode support
+- [ ] Food comparison view
+- [ ] Meal builder/tracker
+- [ ] Shopping list generator
+- [ ] Favorites/bookmarks
+
+### Technical
+- [ ] Extract food data to separate JSON file
+- [ ] Add service worker for offline use
+- [x] Add PWA manifest for installable app
+- [ ] Add food search suggestions/autocomplete

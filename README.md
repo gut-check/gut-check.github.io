@@ -6,6 +6,15 @@ A FODMAP food guide app to help you quickly check if foods are safe to eat on a 
 
 - **150+ Foods** across 9 categories (vegetables, fruits, grains, dairy, proteins, nuts/seeds, legumes, condiments, beverages)
 - **Traffic Light System** - Green (low/safe), Orange (moderate/limit), Red (high/avoid)
+- **Four Food Types**:
+
+  | Type | Example | Meaning |
+  |------|---------|---------|
+  | Always safe | Carrot, Kale | Low FODMAP at any amount |
+  | Safe with limit | Blueberries (1 cup) | Low up to tested serving |
+  | Portion-dependent | Cabbage, Avocado | Changes from Low → Moderate → High based on portion |
+  | Always avoid | Apple, Garlic | High FODMAP at any amount |
+
 - **Search & Filter** - Find foods quickly by name or filter by FODMAP level
 - **Category & A-Z Views** - Browse by food category or alphabetically
 - **Flip Cards** - Click on high FODMAP foods to see:
