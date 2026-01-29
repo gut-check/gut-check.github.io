@@ -1,0 +1,33 @@
+{
+  "name": "Gut Check - FODMAP Food Guide",
+  "short_name": "Gut Check",
+  "description": "Check if foods are safe to eat on a low-FODMAP diet",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#faf9f7",
+  "theme_color": "#faf9f7",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='40' fill='%23faf9f7'/><circle cx='96' cy='42' r='28' fill='%23c62828'/><circle cx='96' cy='96' r='28' fill='%23d4820a'/><circle cx='96' cy='150' r='28' fill='%233d9970'/></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='100' fill='%23faf9f7'/><circle cx='256' cy='112' r='72' fill='%23c62828'/><circle cx='256' cy='256' r='72' fill='%23d4820a'/><circle cx='256' cy='400' r='72' fill='%233d9970'/></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' fill='%23faf9f7'/><circle cx='96' cy='42' r='28' fill='%23c62828'/><circle cx='96' cy='96' r='28' fill='%23d4820a'/><circle cx='96' cy='150' r='28' fill='%233d9970'/></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": ["health", "food", "lifestyle"],
+  "lang": "en",
+  "dir": "ltr"
+}
