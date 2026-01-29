@@ -2,51 +2,7 @@
 
 ## Phase 2: Additional Common Foods (~30 items)
 
-### Vegetables
-- [x] Water chestnuts (low)
-- [x] Bamboo shoots (low)
-- [x] Celeriac (high - different from celery)
-- [x] Rutabaga (low)
-- [x] Romaine lettuce (low)
-- [x] Iceberg lettuce (low)
-- [x] Endive (low)
-- [x] Okra (low)
-- [x] Jicama (low)
-- [x] Hearts of palm (low)
 
-### Fruits
-- [x] Figs fresh (moderate)
-- [x] Figs dried (high)
-- [x] Lychee (moderate)
-- [x] Longan (moderate)
-- [x] Dragon fruit (low)
-- [x] Pomegranate (low, small serve)
-- [x] Guava (low)
-- [x] Persimmon (high)
-- [x] Rhubarb (low)
-- [x] Coconut fresh meat (low)
-
-### Proteins
-- [x] Lamb (low) - already existed
-- [x] Duck (low)
-- [x] Turkey (low) - already existed
-- [x] Venison (low)
-- [x] Crab (low) - already existed
-- [x] Lobster (low) - already existed
-- [x] Oysters (low)
-- [x] Mussels (low)
-- [x] Scallops (low)
-
-### Grains
-- [x] Spelt flour (moderate)
-- [x] Kamut (high)
-- [x] Amaranth (low)
-- [x] Teff (low)
-
-### Dairy Alternatives
-- [x] Oat milk (low, small serve)
-- [x] Rice milk (low)
-- [x] Hemp milk (low)
 
 ### Legumes - Lentil Varieties (Priority)
 
