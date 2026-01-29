@@ -3,50 +3,50 @@
 ## Phase 2: Additional Common Foods (~30 items)
 
 ### Vegetables
-- [ ] Water chestnuts (low)
-- [ ] Bamboo shoots (low)
-- [ ] Celeriac (high - different from celery)
-- [ ] Rutabaga (low)
-- [ ] Romaine lettuce (low)
-- [ ] Iceberg lettuce (low)
-- [ ] Endive (low)
-- [ ] Okra (low)
-- [ ] Jicama (low)
-- [ ] Hearts of palm (low)
+- [x] Water chestnuts (low)
+- [x] Bamboo shoots (low)
+- [x] Celeriac (high - different from celery)
+- [x] Rutabaga (low)
+- [x] Romaine lettuce (low)
+- [x] Iceberg lettuce (low)
+- [x] Endive (low)
+- [x] Okra (low)
+- [x] Jicama (low)
+- [x] Hearts of palm (low)
 
 ### Fruits
-- [ ] Figs fresh (moderate)
-- [ ] Figs dried (high)
-- [ ] Lychee (moderate)
-- [ ] Longan (moderate)
-- [ ] Dragon fruit (low)
-- [ ] Pomegranate (low, small serve)
-- [ ] Guava (low)
-- [ ] Persimmon (high)
-- [ ] Rhubarb (low)
-- [ ] Coconut fresh meat (low)
+- [x] Figs fresh (moderate)
+- [x] Figs dried (high)
+- [x] Lychee (moderate)
+- [x] Longan (moderate)
+- [x] Dragon fruit (low)
+- [x] Pomegranate (low, small serve)
+- [x] Guava (low)
+- [x] Persimmon (high)
+- [x] Rhubarb (low)
+- [x] Coconut fresh meat (low)
 
 ### Proteins
-- [ ] Lamb (low)
-- [ ] Duck (low)
-- [ ] Turkey (low)
-- [ ] Venison (low)
-- [ ] Crab (low)
-- [ ] Lobster (low)
-- [ ] Oysters (low)
-- [ ] Mussels (low)
-- [ ] Scallops (low)
+- [x] Lamb (low) - already existed
+- [x] Duck (low)
+- [x] Turkey (low) - already existed
+- [x] Venison (low)
+- [x] Crab (low) - already existed
+- [x] Lobster (low) - already existed
+- [x] Oysters (low)
+- [x] Mussels (low)
+- [x] Scallops (low)
 
 ### Grains
-- [ ] Spelt flour (moderate)
-- [ ] Kamut (high)
-- [ ] Amaranth (low)
-- [ ] Teff (low)
+- [x] Spelt flour (moderate)
+- [x] Kamut (high)
+- [x] Amaranth (low)
+- [x] Teff (low)
 
 ### Dairy Alternatives
-- [ ] Oat milk (low, small serve)
-- [ ] Rice milk (low)
-- [ ] Hemp milk (low)
+- [x] Oat milk (low, small serve)
+- [x] Rice milk (low)
+- [x] Hemp milk (low)
 
 ### Legumes - Lentil Varieties (Priority)
 
