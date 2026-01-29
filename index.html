@@ -603,6 +603,23 @@
       line-height: 1.4;
     }
 
+    .reasons-list.safe li::before {
+      color: var(--color-safe);
+    }
+
+    .tip-section {
+      margin-top: var(--space-sm);
+      padding: var(--space-sm);
+      background: var(--color-safe-bg);
+      border-radius: 6px;
+      font-size: 0.7rem;
+      line-height: 1.4;
+    }
+
+    .tip-section strong {
+      color: var(--color-safe);
+    }
+
     .flip-indicator {
       position: absolute;
       bottom: var(--space-sm);
@@ -858,6 +875,11 @@
         reasons: ["High sorbitol content", "Excess fructose"],
         alternatives: ["Blueberries", "Strawberries"]
       },
+      "Dates": {
+        fodmapTypes: ["fructose"],
+        reasons: ["Very high in fructose", "Even 1 date can trigger symptoms"],
+        alternatives: ["Maple syrup", "Rice malt syrup", "Small amount of banana"]
+      },
       "Peach": {
         fodmapTypes: ["sorbitol"],
         reasons: ["High sorbitol (polyol)", "Stone fruits problematic"],
@@ -885,10 +907,26 @@
       },
 
       // Grains
-      "Brioche": {
+      "Brioche (Artisan)": {
+        fodmapTypes: ["fructans", "lactose"],
+        reasons: [
+          "12+ hour fermentation reduces fructans ~70%",
+          "Lactose from dairy does NOT reduce with time",
+          "1 slice keeps both fructans + lactose tolerable",
+          "If lactose-tolerant, fructans are the only concern"
+        ],
+        alternatives: ["Traditional sourdough", "GF bread"],
+        tip: "Ask baker for overnight/12+ hour proof. Lactose-tolerant? Enjoy more freely!"
+      },
+      "Brioche (Commercial)": {
         fodmapTypes: ["fructans", "lactose", "fructose"],
-        reasons: ["Wheat flour (fructans)", "Dairy (milk, butter)", "Often contains honey"],
-        alternatives: ["GF bread", "Sourdough (spelt)"]
+        reasons: [
+          "Fast-rise methods leave fructans intact",
+          "Dairy content (milk, butter, eggs)",
+          "Often contains honey or high-fructose sweeteners",
+          "Additives may worsen symptoms"
+        ],
+        alternatives: ["Artisan brioche (small portion)", "Traditional sourdough", "GF bread"]
       },
       "Barley": {
         fodmapTypes: ["fructans"],
@@ -898,12 +936,42 @@
       "Rye": {
         fodmapTypes: ["fructans"],
         reasons: ["High fructan content", "Includes rye bread"],
-        alternatives: ["Spelt sourdough", "GF bread"]
+        alternatives: ["Traditional sourdough", "GF bread"]
       },
       "Couscous": {
         fodmapTypes: ["fructans"],
         reasons: ["Made from wheat", "High in fructans"],
         alternatives: ["Quinoa", "Rice", "Buckwheat"]
+      },
+      "Sourdough (Traditional)": {
+        fodmapTypes: [],
+        reasons: [
+          "Long fermentation (12-24hrs) breaks down fructans",
+          "Bacteria consume FODMAPs before you eat",
+          "70-90% fructan reduction vs regular bread",
+          "White wheat, wholemeal & spelt all safe"
+        ],
+        alternatives: [],
+        tip: "Look for: no yeast in ingredients, tangy taste, short ingredient list (flour, water, salt, starter)"
+      },
+      "Sourdough (Commercial)": {
+        fodmapTypes: ["fructans"],
+        reasons: [
+          "Fast-rise methods (1-2 hrs) skip fructan breakdown",
+          "Often contains added baker's yeast",
+          "'Sourdough-style' or 'sourdough flavor' = not real",
+          "Check label: yeast listed = fake sourdough"
+        ],
+        alternatives: ["Traditional sourdough", "GF bread"]
+      },
+      "Sourdough (Rye)": {
+        fodmapTypes: ["fructans", "gos"],
+        reasons: [
+          "Rye is very high in fructans + GOS",
+          "Even long fermentation can't reduce enough",
+          "Remains high FODMAP regardless of process"
+        ],
+        alternatives: ["Traditional wheat/spelt sourdough", "GF bread"]
       },
 
       // Dairy
@@ -1015,12 +1083,12 @@
       "Challah Bread": {
         fodmapTypes: ["fructans"],
         reasons: ["Contains wheat flour", "1 slice is moderate"],
-        alternatives: ["Sourdough spelt", "GF bread"]
+        alternatives: ["Traditional sourdough", "GF bread"]
       },
       "Wheat Bread": {
         fodmapTypes: ["fructans"],
         reasons: ["Wheat contains fructans", "Portion size matters"],
-        alternatives: ["Sourdough spelt", "GF bread"]
+        alternatives: ["Traditional sourdough", "GF bread"]
       },
       "Wheat Pasta": {
         fodmapTypes: ["fructans"],
@@ -1170,6 +1238,7 @@
           { name: "Blueberries", emoji: "🫐", level: "low", serving: "1 cup" },
           { name: "Cantaloupe", emoji: "🍈", level: "low", serving: "¾ cup" },
           { name: "Cherries", emoji: "🍒", level: "high" },
+          { name: "Dates", emoji: "🌴", level: "high" },
           { name: "Grapes", emoji: "🍇", level: "moderate", serving: "10 grapes max" },
           { name: "Kiwi", emoji: "🥝", level: "low", serving: "2 small" },
           { name: "Lemon", emoji: "🍋", level: "low" },
@@ -1189,7 +1258,8 @@
         title: "Grains & Cereals",
         foods: [
           { name: "Barley", emoji: "🌾", level: "high" },
-          { name: "Brioche", emoji: "🍞", level: "high" },
+          { name: "Brioche (Artisan)", emoji: "🍞", level: "moderate", serving: "1 slice" },
+          { name: "Brioche (Commercial)", emoji: "🍞", level: "high" },
           { name: "Buckwheat", emoji: "🌾", level: "low" },
           { name: "Corn Tortillas", emoji: "🫓", level: "low", serving: "3 pieces" },
           { name: "Cornmeal", emoji: "🌽", level: "low" },
@@ -1207,7 +1277,9 @@
           { name: "Rice Noodles", emoji: "🍜", level: "low" },
           { name: "Rye", emoji: "🍞", level: "high" },
           { name: "Sorghum", emoji: "🌾", level: "low" },
-          { name: "Sourdough (Spelt)", emoji: "🍞", level: "low" },
+          { name: "Sourdough (Commercial)", emoji: "🍞", level: "high" },
+          { name: "Sourdough (Rye)", emoji: "🍞", level: "high" },
+          { name: "Sourdough (Traditional)", emoji: "🍞", level: "low", serving: "2 slices" },
           { name: "Tapioca Starch", emoji: "🥣", level: "low" },
           { name: "Challah Bread", emoji: "🍞", level: "moderate", serving: "1 slice" },
           { name: "Wheat Bread", emoji: "🍞", level: "moderate", serving: "1 slice" },
@@ -1263,6 +1335,8 @@
           { name: "Almonds", emoji: "🌰", level: "low", serving: "10 nuts" },
           { name: "Brazil Nuts", emoji: "🌰", level: "low", serving: "10 nuts" },
           { name: "Cashews", emoji: "🌰", level: "high" },
+          { name: "Chestnuts", emoji: "🌰", level: "low", serving: "20 nuts" },
+          { name: "Chestnut Spread", emoji: "🌰", level: "moderate", serving: "check label" },
           { name: "Chia Seeds", emoji: "🫘", level: "low" },
           { name: "Flax Seeds", emoji: "🫘", level: "low", serving: "1 tbsp" },
           { name: "Hazelnuts", emoji: "🌰", level: "low", serving: "24 nuts" },
@@ -1299,6 +1373,7 @@
           { name: "Asafoetida", emoji: "🌿", level: "low" },
           { name: "Balsamic Vinegar", emoji: "🍶", level: "low", serving: "1 tbsp" },
           { name: "Brown Sugar", emoji: "🟤", level: "low" },
+          { name: "Cacao/Cocoa Powder", emoji: "🍫", level: "low", serving: "2-4 tsp" },
           { name: "Capers", emoji: "🫒", level: "low" },
           { name: "Coconut Oil", emoji: "🥥", level: "low" },
           { name: "Dark Chocolate", emoji: "🍫", level: "low", serving: "5 squares" },
@@ -1433,6 +1508,8 @@
     function renderCardBack(food, details) {
       if (!details) return '';
 
+      const isSafe = food.level === 'low';
+
       const pillsHtml = details.fodmapTypes
         .map(type => `<span class="fodmap-pill ${type}">${type}</span>`)
         .join('');
@@ -1441,12 +1518,35 @@
         .map(reason => `<li>${reason}</li>`)
         .join('');
 
-      const alternativesHtml = details.alternatives
+      const alternativesHtml = details.alternatives && details.alternatives.length > 0
         ? `<div class="back-section">
             <div class="back-section-title">Try Instead</div>
             <div class="alternatives-text">${details.alternatives.join(', ')}</div>
           </div>`
         : '';
+
+      const tipHtml = details.tip
+        ? `<div class="tip-section"><strong>Tip:</strong> ${details.tip}</div>`
+        : '';
+
+      // Different layout for safe (low FODMAP) vs unsafe foods
+      if (isSafe) {
+        return `
+          <div class="card-back">
+            <div class="back-header">
+              <div class="food-name">${food.name}</div>
+              <span class="fodmap-badge ${food.level}">${food.level}</span>
+            </div>
+            <div class="back-content">
+              <div class="back-section">
+                <div class="back-section-title">Why It's Safe</div>
+                <ul class="reasons-list safe">${reasonsHtml}</ul>
+              </div>
+              ${tipHtml}
+            </div>
+          </div>
+        `;
+      }
 
       return `
         <div class="card-back">
@@ -1464,6 +1564,7 @@
               <ul class="reasons-list">${reasonsHtml}</ul>
             </div>
             ${alternativesHtml}
+            ${tipHtml}
           </div>
         </div>
       `;
