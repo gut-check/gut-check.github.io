@@ -398,9 +398,34 @@
       margin-top: 2px;
     }
 
-    .food-list-item .fodmap-badge {
+    .food-list-item .list-portions {
+      display: flex;
+      gap: var(--space-sm);
+      font-size: 0.7rem;
+      flex-shrink: 0;
+      align-items: center;
+    }
+
+    .food-list-item .list-portions .portion-low { color: var(--color-safe); }
+    .food-list-item .list-portions .portion-moderate { color: var(--color-caution); }
+    .food-list-item .list-portions .portion-high { color: var(--color-avoid); }
+
+    .food-list-item .list-serving {
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+      margin-right: var(--space-sm);
+    }
+
+    .food-list-item .list-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
       flex-shrink: 0;
     }
+
+    .food-list-item .list-dot.low { background: var(--color-safe); }
+    .food-list-item .list-dot.moderate { background: var(--color-caution); }
+    .food-list-item .list-dot.high { background: var(--color-avoid); }
 
     .food-card-container {
       border-radius: 12px;
@@ -618,6 +643,25 @@
 
     .tip-section strong {
       color: var(--color-safe);
+    }
+
+    .portion-scale {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.65rem;
+      padding: var(--space-xs) 0;
+      gap: var(--space-xs);
+    }
+
+    .portion-scale span {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .portion-low { color: var(--color-safe); }
+    .portion-moderate { color: var(--color-caution); }
+    .portion-high { color: var(--color-avoid);
     }
 
     .flip-indicator {
@@ -848,6 +892,81 @@
         reasons: ["Contains fructans", "Moderate portions only"],
         alternatives: ["Green beans", "Bell peppers"]
       },
+      "Beetroot": {
+        fodmapTypes: ["fructans", "gos"],
+        reasons: [
+          "Contains fructans and GOS",
+          "2 slices (20g) is moderate limit",
+          "Pickled beetroot similar",
+          "Watch portion in salads"
+        ],
+        alternatives: ["Carrot", "Potato", "Radish"]
+      },
+      "Peas (Green)": {
+        fodmapTypes: ["gos", "fructans"],
+        reasons: [
+          "High in GOS (galacto-oligosaccharides)",
+          "¼ cup is moderate tolerance",
+          "Garden peas, petit pois similar",
+          "Easy to exceed in mixed dishes"
+        ],
+        alternatives: ["Green beans (small)", "Snow peas (5 pods)", "Bok choy"]
+      },
+      "Eggplant": {
+        fodmapTypes: ["sorbitol"],
+        reasons: [
+          "Contains sorbitol (polyol)",
+          "Safe at 1 cup (75g)",
+          "Moderate at 182g, high at 260g+",
+          "Portion size is key"
+        ],
+        alternatives: ["Zucchini (small)", "Bell pepper"],
+        portions: { low: "75g", moderate: "182g", high: "260g" }
+      },
+      "Green Beans": {
+        fodmapTypes: ["sorbitol"],
+        reasons: [
+          "Contains sorbitol",
+          "Safe at 75g (~15-20 beans)",
+          "Becomes moderate at 100g+",
+          "French beans similar"
+        ],
+        alternatives: ["Bell pepper", "Bok choy"],
+        portions: { low: "75g", moderate: "100g", high: "125g" }
+      },
+      "Cabbage": {
+        fodmapTypes: ["fructans"],
+        reasons: [
+          "Contains fructans",
+          "Safe at ¾ cup (75g)",
+          "Both green and red varieties",
+          "Coleslaw portions add up quickly"
+        ],
+        alternatives: ["Lettuce", "Bok choy"],
+        portions: { low: "75g", moderate: "150g", high: "180g" }
+      },
+      "Zucchini": {
+        fodmapTypes: ["fructans"],
+        reasons: [
+          "Contains fructans (oligo)",
+          "Safe at 65g (½ cup)",
+          "Very narrow margin to moderate (70g)",
+          "Easy to exceed in pasta dishes"
+        ],
+        alternatives: ["Cucumber", "Bell pepper"],
+        portions: { low: "65g", moderate: "70g", high: "100g" }
+      },
+      "Sweet Potato": {
+        fodmapTypes: ["mannitol"],
+        reasons: [
+          "Contains mannitol (polyol)",
+          "Safe at ½ cup (75g)",
+          "Different from regular potato (low)",
+          "Fries/chips can exceed quickly"
+        ],
+        alternatives: ["Regular potato", "Carrot"],
+        portions: { low: "75g", moderate: "100g", high: "112g" }
+      },
 
       // Fruits
       "Apple": {
@@ -904,6 +1023,26 @@
         fodmapTypes: ["fructose"],
         reasons: ["Fructose becomes problematic over 5 berries", "Safe in small portions"],
         alternatives: ["Blueberries", "Kiwi", "Cantaloupe"]
+      },
+      "Nectarine": {
+        fodmapTypes: ["sorbitol"],
+        reasons: ["High sorbitol (polyol)", "Stone fruit like peach", "Even small amounts problematic"],
+        alternatives: ["Oranges", "Pineapple", "Cantaloupe"]
+      },
+      "Plum": {
+        fodmapTypes: ["sorbitol"],
+        reasons: ["Very high sorbitol content", "All stone fruits problematic", "Fresh and dried both high"],
+        alternatives: ["Blueberries", "Kiwi", "Grapes (small portion)"]
+      },
+      "Prune": {
+        fodmapTypes: ["sorbitol", "fructans"],
+        reasons: ["Extremely high sorbitol", "Concentrated dried plum", "Known to cause digestive issues"],
+        alternatives: ["Raisins (small)", "Dried cranberries (small)"]
+      },
+      "Apricot": {
+        fodmapTypes: ["sorbitol"],
+        reasons: ["Contains sorbitol", "1 small fruit is moderate", "Dried apricots higher"],
+        alternatives: ["Oranges", "Kiwi", "Strawberries (small)"]
       },
 
       // Grains
@@ -1067,13 +1206,25 @@
       // Moderate FODMAP foods
       "Celery": {
         fodmapTypes: ["mannitol"],
-        reasons: ["Contains mannitol", "Safe in small amounts (<5cm)"],
-        alternatives: ["Cucumber", "Bell pepper"]
+        reasons: [
+          "Contains mannitol (polyol)",
+          "Safe at <5cm stalk",
+          "Larger portions become moderate/high",
+          "Celery leaves are safe"
+        ],
+        alternatives: ["Cucumber", "Bell pepper"],
+        portions: { low: "<5cm stalk", moderate: "½ stalk", high: "1+ stalk" }
       },
       "Avocado": {
         fodmapTypes: ["sorbitol"],
-        reasons: ["Contains sorbitol", "⅛ avocado is low FODMAP"],
-        alternatives: ["Small portion only", "Olives"]
+        reasons: [
+          "Contains sorbitol (polyol)",
+          "Tiny portions are safe",
+          "⅛ avocado is moderate limit",
+          "¼ avocado or more is high FODMAP"
+        ],
+        alternatives: ["Olives", "Small portion only"],
+        portions: { low: "tiny", moderate: "⅛", high: "¼+" }
       },
       "Banana (Ripe)": {
         fodmapTypes: ["fructans"],
@@ -1184,23 +1335,27 @@
         title: "Vegetables",
         foods: [
           { name: "Artichoke", emoji: "🌿", level: "high" },
+          { name: "Arugula", emoji: "🥬", level: "low" },
           { name: "Asparagus", emoji: "🌿", level: "high" },
           { name: "Bean Sprouts", emoji: "🌱", level: "low" },
+          { name: "Beetroot", emoji: "🟣", level: "moderate", serving: "2 slices (20g)" },
           { name: "Bell Pepper", emoji: "🫑", level: "low" },
           { name: "Bok Choy", emoji: "🥬", level: "low" },
           { name: "Broccoli", emoji: "🥦", level: "low", serving: "¾ cup heads" },
-          { name: "Cabbage", emoji: "🥬", level: "low", serving: "¾ cup" },
+          { name: "Brussels Sprouts", emoji: "🥬", level: "low", serving: "½ cup (2 sprouts)" },
+          { name: "Cabbage", emoji: "🥬", level: "low", serving: "¾ cup (75g)", portions: { moderate: "150g", high: "180g" } },
           { name: "Carrot", emoji: "🥕", level: "low" },
           { name: "Cauliflower", emoji: "🥬", level: "high" },
-          { name: "Celery", emoji: "🥬", level: "moderate", serving: "<5cm stalk" },
+          { name: "Celery", emoji: "🥬", level: "low", serving: "<5cm stalk" },
           { name: "Chives", emoji: "🌿", level: "low" },
           { name: "Collard Greens", emoji: "🥬", level: "low" },
+          { name: "Corn", emoji: "🌽", level: "low", serving: "½ cob (38g)" },
           { name: "Cucumber", emoji: "🥒", level: "low" },
-          { name: "Eggplant", emoji: "🍆", level: "low", serving: "1 cup" },
+          { name: "Eggplant", emoji: "🍆", level: "low", serving: "1 cup (75g)", portions: { moderate: "182g", high: "260g" } },
           { name: "Fennel Bulb", emoji: "🌿", level: "high" },
           { name: "Garlic", emoji: "🧄", level: "high" },
           { name: "Ginger", emoji: "🫚", level: "low" },
-          { name: "Green Beans", emoji: "🫛", level: "low" },
+          { name: "Green Beans", emoji: "🫛", level: "low", serving: "75g", portions: { moderate: "100g", high: "125g" } },
           { name: "Kale", emoji: "🥬", level: "low" },
           { name: "Leek (Green Part)", emoji: "🧅", level: "low" },
           { name: "Leek (White Part)", emoji: "🧅", level: "high" },
@@ -1212,6 +1367,8 @@
           { name: "Olives", emoji: "🫒", level: "low" },
           { name: "Onion", emoji: "🧅", level: "high" },
           { name: "Parsnip", emoji: "🥕", level: "low" },
+          { name: "Peas (Green)", emoji: "🫛", level: "moderate", serving: "¼ cup" },
+          { name: "Peas (Snow)", emoji: "🫛", level: "low", serving: "5 pods (23g)" },
           { name: "Potato", emoji: "🥔", level: "low" },
           { name: "Pumpkin", emoji: "🎃", level: "low", serving: "63g" },
           { name: "Radish", emoji: "🔴", level: "low" },
@@ -1219,11 +1376,11 @@
           { name: "Shallots", emoji: "🧅", level: "high" },
           { name: "Spinach", emoji: "🥬", level: "low" },
           { name: "Squash (Butternut)", emoji: "🎃", level: "low", serving: "¼ cup" },
-          { name: "Sweet Potato", emoji: "🍠", level: "low", serving: "½ cup" },
+          { name: "Sweet Potato", emoji: "🍠", level: "low", serving: "½ cup (75g)", portions: { moderate: "100g", high: "112g" } },
           { name: "Swiss Chard", emoji: "🥬", level: "low" },
           { name: "Tomato", emoji: "🍅", level: "low" },
           { name: "Turnip", emoji: "🥔", level: "low" },
-          { name: "Zucchini", emoji: "🥒", level: "low", serving: "65g" },
+          { name: "Zucchini", emoji: "🥒", level: "low", serving: "65g", portions: { moderate: "70g", high: "100g" } },
         ]
       },
       fruits: {
@@ -1231,25 +1388,35 @@
         title: "Fruits",
         foods: [
           { name: "Apple", emoji: "🍎", level: "high" },
-          { name: "Avocado", emoji: "🥑", level: "moderate", serving: "⅛ avocado" },
+          { name: "Apricot", emoji: "🍑", level: "moderate", serving: "1 small" },
+          { name: "Avocado", emoji: "🥑", level: "low", portions: { low: "tiny", moderate: "⅛", high: "¼+" } },
           { name: "Banana (Unripe)", emoji: "🍌", level: "low", serving: "1 medium" },
           { name: "Banana (Ripe)", emoji: "🍌", level: "moderate" },
           { name: "Blackberries", emoji: "🫐", level: "high" },
           { name: "Blueberries", emoji: "🫐", level: "low", serving: "1 cup" },
           { name: "Cantaloupe", emoji: "🍈", level: "low", serving: "¾ cup" },
           { name: "Cherries", emoji: "🍒", level: "high" },
+          { name: "Cranberries (Fresh)", emoji: "🔴", level: "low", serving: "1 cup" },
           { name: "Dates", emoji: "🌴", level: "high" },
+          { name: "Grapefruit", emoji: "🍊", level: "low" },
           { name: "Grapes", emoji: "🍇", level: "moderate", serving: "10 grapes max" },
+          { name: "Honeydew", emoji: "🍈", level: "low", serving: "½ cup" },
           { name: "Kiwi", emoji: "🥝", level: "low", serving: "2 small" },
           { name: "Lemon", emoji: "🍋", level: "low" },
+          { name: "Lime", emoji: "🍋", level: "low" },
           { name: "Mango", emoji: "🥭", level: "high" },
+          { name: "Nectarine", emoji: "🍑", level: "high" },
           { name: "Orange", emoji: "🍊", level: "low" },
           { name: "Papaya", emoji: "🍈", level: "low" },
+          { name: "Passion Fruit", emoji: "🥭", level: "low" },
           { name: "Peach", emoji: "🍑", level: "high" },
           { name: "Pear", emoji: "🍐", level: "high" },
           { name: "Pineapple", emoji: "🍍", level: "low", serving: "1 cup" },
+          { name: "Plum", emoji: "🟣", level: "high" },
+          { name: "Prune", emoji: "🟣", level: "high" },
           { name: "Raspberry", emoji: "🍓", level: "moderate", serving: "⅓ cup max" },
           { name: "Strawberry", emoji: "🍓", level: "moderate", serving: "5 medium max" },
+          { name: "Tangerine", emoji: "🍊", level: "low", serving: "2 small" },
           { name: "Watermelon", emoji: "🍉", level: "high" },
         ]
       },
@@ -1529,6 +1696,18 @@
         ? `<div class="tip-section"><strong>Tip:</strong> ${details.tip}</div>`
         : '';
 
+      // Portion scale for portion-dependent foods
+      const portionsHtml = details.portions
+        ? `<div class="back-section">
+            <div class="back-section-title">Portion Guide</div>
+            <div class="portion-scale">
+              <span class="portion-low">🟢 ${details.portions.low}</span>
+              <span class="portion-moderate">🟡 ${details.portions.moderate}</span>
+              <span class="portion-high">🔴 ${details.portions.high}</span>
+            </div>
+          </div>`
+        : '';
+
       // Different layout for safe (low FODMAP) vs unsafe foods
       if (isSafe) {
         return `
@@ -1542,6 +1721,7 @@
                 <div class="back-section-title">Why It's Safe</div>
                 <ul class="reasons-list safe">${reasonsHtml}</ul>
               </div>
+              ${portionsHtml}
               ${tipHtml}
             </div>
           </div>
@@ -1563,6 +1743,7 @@
               <div class="back-section-title">Why</div>
               <ul class="reasons-list">${reasonsHtml}</ul>
             </div>
+            ${portionsHtml}
             ${alternativesHtml}
             ${tipHtml}
           </div>
@@ -1577,8 +1758,19 @@
       const flipIndicator = hasDetails ? '<span class="flip-indicator">ⓘ</span>' : '';
       const backHtml = hasDetails ? renderCardBack(food, details) : '';
 
+      // Calculate reachable levels for filtering
+      const hasPortions = food.portions || details?.portions;
+      const reachableLevels = [];
+      if (hasPortions) {
+        if (details?.portions?.low || food.serving) reachableLevels.push('low');
+        if (food.portions?.moderate || details?.portions?.moderate) reachableLevels.push('moderate');
+        if (food.portions?.high || details?.portions?.high) reachableLevels.push('high');
+      } else {
+        reachableLevels.push(food.level);
+      }
+
       return `
-        <div class="food-card-container ${hasDetails ? 'has-details' : ''}" data-level="${food.level}" data-name="${food.name.toLowerCase()}">
+        <div class="food-card-container ${hasDetails ? 'has-details' : ''}" data-level="${food.level}" data-levels="${reachableLevels.join(',')}" data-name="${food.name.toLowerCase()}">
           <div class="food-card">
             <div class="card-front">
               <div class="food-image">${food.emoji}</div>
@@ -1649,17 +1841,62 @@
     }
 
     // Render list item for compact list view
+    // Handles four food types:
+    // 1. Always safe (low, no serving, no portions) -> green dot only
+    // 2. Safe with limit (low + serving) -> serving text + green dot
+    // 3. Portion-dependent (has portions) -> traffic light 🟢🟡🔴
+    // 4. Always avoid (high, no portions) -> red dot only
     function renderListItem(food) {
+      const details = getFoodDetails(food.name);
+      const hasPortions = food.portions || details?.portions;
+
+      let rightContent;
+      let reachableLevels = [];
+
+      if (hasPortions) {
+        // Type 3: Portion-dependent - show traffic light
+        const p = food.portions || details?.portions || {};
+        reachableLevels = ['low', 'moderate', 'high'];
+        rightContent = `
+          <div class="list-portions">
+            <span class="portion-low">🟢 ${p.low || food.serving || '✓'}</span>
+            <span class="portion-moderate">🟡 ${p.moderate}</span>
+            <span class="portion-high">🔴 ${p.high}</span>
+          </div>`;
+      } else if (food.level === 'low' && food.serving) {
+        // Type 2: Safe with limit - serving + green dot
+        reachableLevels = ['low'];
+        rightContent = `
+          <span class="list-serving">≤${food.serving}</span>
+          <span class="list-dot low"></span>`;
+      } else if (food.level === 'low') {
+        // Type 1: Always safe - green dot only
+        reachableLevels = ['low'];
+        rightContent = `<span class="list-dot low"></span>`;
+      } else if (food.level === 'moderate' && food.serving) {
+        // Moderate with serving - show serving + yellow dot
+        reachableLevels = ['moderate'];
+        rightContent = `
+          <span class="list-serving">≤${food.serving}</span>
+          <span class="list-dot moderate"></span>`;
+      } else if (food.level === 'moderate') {
+        // Moderate without serving - yellow dot only
+        reachableLevels = ['moderate'];
+        rightContent = `<span class="list-dot moderate"></span>`;
+      } else {
+        // Type 4: Always avoid (high) - red dot only
+        reachableLevels = ['high'];
+        rightContent = `<span class="list-dot high"></span>`;
+      }
+
       return `
-        <div class="food-list-item" data-level="${food.level}" data-name="${food.name.toLowerCase()}">
+        <div class="food-list-item" data-level="${food.level}" data-levels="${reachableLevels.join(',')}" data-name="${food.name.toLowerCase()}">
           <span class="list-emoji">${food.emoji}</span>
           <div class="list-info">
             <div class="list-name">${food.name}</div>
-            ${food.serving ? `<div class="list-serving">Safe: ${food.serving}</div>` : ''}
           </div>
-          <span class="fodmap-badge ${food.level}">${food.level}</span>
-        </div>
-      `;
+          ${rightContent}
+        </div>`;
     }
 
     // Render compact list view
@@ -1766,9 +2003,10 @@
       const categories = document.querySelectorAll('.category');
       let visibleCount = 0;
 
-      // Filter card view items
+      // Filter card view items (use data-levels to include portion-dependent foods)
       foodCards.forEach(card => {
-        const matchesLevel = activeFilter === null || card.dataset.level === activeFilter;
+        const cardLevels = card.dataset.levels ? card.dataset.levels.split(',') : [card.dataset.level];
+        const matchesLevel = activeFilter === null || cardLevels.includes(activeFilter);
         const matchesSearch = searchQuery === '' || card.dataset.name.includes(searchQuery);
 
         if (matchesLevel && matchesSearch) {
@@ -1779,9 +2017,10 @@
         }
       });
 
-      // Filter list view items
+      // Filter list view items (use data-levels to include portion-dependent foods)
       foodListItems.forEach(item => {
-        const matchesLevel = activeFilter === null || item.dataset.level === activeFilter;
+        const itemLevels = item.dataset.levels ? item.dataset.levels.split(',') : [item.dataset.level];
+        const matchesLevel = activeFilter === null || itemLevels.includes(activeFilter);
         const matchesSearch = searchQuery === '' || item.dataset.name.includes(searchQuery);
 
         if (matchesLevel && matchesSearch) {
