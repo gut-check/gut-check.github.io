@@ -57,6 +57,34 @@
       --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
     }
 
+    /* Dark mode - auto-detect system preference */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --color-bg: #1a1918;
+        --color-surface: #262524;
+        --color-text: #e8e6e3;
+        --color-text-muted: #9a9590;
+        --color-border: #3d3a37;
+
+        /* Semantic colors - slightly adjusted for dark mode */
+        --color-safe: #4eca89;
+        --color-safe-bg: #1e3329;
+        --color-caution: #e9a033;
+        --color-caution-bg: #352a1a;
+        --color-avoid: #e85454;
+        --color-avoid-bg: #3a2020;
+
+        /* Accent */
+        --color-accent: #8fa676;
+        --color-accent-light: #2d3328;
+
+        /* Shadows - more subtle in dark mode */
+        --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+        --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
+        --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
+      }
+    }
+
     * {
       margin: 0;
       padding: 0;
@@ -2075,6 +2103,17 @@
 
     // Add click listener for card flips (event delegation)
     document.getElementById('app').addEventListener('click', handleCardClick);
+
+    // Dark mode: update theme-color meta tag based on system preference
+    const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+    const updateThemeColor = (isDark) => {
+      if (themeColorMeta) {
+        themeColorMeta.content = isDark ? '#1a1918' : '#faf9f7';
+      }
+    };
+    const darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    updateThemeColor(darkModeQuery.matches);
+    darkModeQuery.addEventListener('change', (e) => updateThemeColor(e.matches));
   </script>
 </body>
 </html>

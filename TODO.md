@@ -91,7 +91,7 @@ Foods to add:
 - [ ] Add barcode scanning integration
 
 ### UI Improvements
-- [ ] Dark mode support
+- [x] Dark mode support (auto-detects system preference)
 - [ ] Food comparison view
 - [ ] Meal builder/tracker
 - [ ] Shopping list generator
