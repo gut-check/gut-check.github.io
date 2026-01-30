@@ -25,10 +25,10 @@ Expand current "Lentils (Canned)" to show all varieties with portion-dependent r
 
 Foods to add:
 
-- [ ] Lentils (Red, Boiled) - low at 23g, moderate at 46g, high at 75g+
-- [ ] Lentils (Green/Brown, Boiled) - low at 29g, moderate at 50g
-- [ ] Lentils (Le Puy/French) - low at 46g
-- [ ] Update existing "Lentils (Canned)" with portions field
+- [x] Lentils (Red, Boiled) - low at 23g, moderate at 46g, high at 75g+
+- [x] Lentils (Green/Brown, Boiled) - low at 29g, moderate at 50g
+- [x] Lentils (Le Puy/French) - low at 46g
+- [x] Update existing "Lentils (Canned)" with portions field
 
 ### Prepared Foods
 - [ ] Pizza (depends on crust)
