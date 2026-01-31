@@ -220,7 +220,8 @@
     .legend-dot.high { background: var(--color-avoid); }
 
     .food-card-container.hidden,
-    .food-list-item.hidden {
+    .food-list-item.hidden,
+    .list-item-wrapper.hidden {
       display: none;
     }
 
@@ -468,6 +469,69 @@
     .food-list-item .list-dot.low { background: var(--color-safe); }
     .food-list-item .list-dot.moderate { background: var(--color-caution); }
     .food-list-item .list-dot.high { background: var(--color-avoid); }
+
+    /* Expandable list item styles */
+    .food-list-item.has-details {
+      cursor: pointer;
+    }
+
+    .food-list-item .list-expand-indicator {
+      font-size: 0.7rem;
+      opacity: 0.35;
+      transition: all var(--transition-fast);
+      margin-left: var(--space-sm);
+    }
+
+    .food-list-item.has-details:hover .list-expand-indicator {
+      opacity: 0.7;
+    }
+
+    .food-list-item.expanded .list-expand-indicator {
+      transform: rotate(180deg);
+    }
+
+    .list-item-wrapper {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: all var(--transition-fast);
+    }
+
+    .list-item-wrapper:hover {
+      border-color: transparent;
+      box-shadow: var(--shadow-md);
+    }
+
+    .list-item-wrapper .food-list-item {
+      border: none;
+      border-radius: 0;
+    }
+
+    .list-item-wrapper .food-list-item:hover {
+      box-shadow: none;
+    }
+
+    .list-details {
+      display: none;
+      padding: var(--space-sm) var(--space-md);
+      padding-left: calc(1.5rem + var(--space-md) * 2);
+      border-top: 1px solid var(--color-border);
+      background: var(--color-surface);
+      font-size: 0.78rem;
+    }
+
+    .list-item-wrapper.expanded .list-details {
+      display: block;
+    }
+
+    .list-details .back-section {
+      margin-bottom: var(--space-sm);
+    }
+
+    .list-details .back-section:last-child {
+      margin-bottom: 0;
+    }
 
     .food-card-container {
       border-radius: 12px;
@@ -1850,6 +1914,72 @@
       `;
     }
 
+    // Render details content for list view (similar to card back but without header)
+    function renderListDetails(food, details) {
+      if (!details) return '';
+
+      const isSafe = food.level === 'low';
+
+      const pillsHtml = details.fodmapTypes
+        .map(type => `<span class="fodmap-pill ${type}">${type}</span>`)
+        .join('');
+
+      const reasonsHtml = details.reasons
+        .map(reason => `<li>${reason}</li>`)
+        .join('');
+
+      const alternativesHtml = details.alternatives && details.alternatives.length > 0
+        ? `<div class="back-section">
+            <div class="back-section-title">Try Instead</div>
+            <div class="alternatives-text">${details.alternatives.join(', ')}</div>
+          </div>`
+        : '';
+
+      const tipHtml = details.tip
+        ? `<div class="tip-section"><strong>Tip:</strong> ${details.tip}</div>`
+        : '';
+
+      const portionsHtml = details.portions
+        ? `<div class="back-section">
+            <div class="back-section-title">Portion Guide</div>
+            <div class="portion-scale">
+              <span class="portion-low">🟢 ${details.portions.low}</span>
+              <span class="portion-moderate">🟡 ${details.portions.moderate}</span>
+              <span class="portion-high">🔴 ${details.portions.high}</span>
+            </div>
+          </div>`
+        : '';
+
+      if (isSafe) {
+        return `
+          <div class="list-details">
+            <div class="back-section">
+              <div class="back-section-title">Why It's Safe</div>
+              <ul class="reasons-list safe">${reasonsHtml}</ul>
+            </div>
+            ${portionsHtml}
+            ${tipHtml}
+          </div>
+        `;
+      }
+
+      return `
+        <div class="list-details">
+          <div class="back-section">
+            <div class="back-section-title">Contains</div>
+            <div class="fodmap-pills">${pillsHtml}</div>
+          </div>
+          <div class="back-section">
+            <div class="back-section-title">Why</div>
+            <ul class="reasons-list">${reasonsHtml}</ul>
+          </div>
+          ${portionsHtml}
+          ${alternativesHtml}
+          ${tipHtml}
+        </div>
+      `;
+    }
+
     // Render food card HTML
     function renderFoodCard(food, showCategory = false) {
       const details = getFoodDetails(food.name);
@@ -1947,6 +2077,7 @@
     // 4. Always avoid (high, no portions) -> red dot only
     function renderListItem(food) {
       const details = getFoodDetails(food.name);
+      const hasDetails = details !== null;
       const hasPortions = food.portions || details?.portions;
 
       let rightContent;
@@ -1988,13 +2119,21 @@
         rightContent = `<span class="list-dot high"></span>`;
       }
 
+      const expandIndicator = hasDetails ? '<span class="list-expand-indicator">▼</span>' : '';
+      const detailsHtml = hasDetails ? renderListDetails(food, details) : '';
+      const hasDetailsClass = hasDetails ? 'has-details' : '';
+
       return `
-        <div class="food-list-item" data-level="${food.level}" data-levels="${reachableLevels.join(',')}" data-name="${food.name.toLowerCase()}">
-          <span class="list-emoji">${food.emoji}</span>
-          <div class="list-info">
-            <div class="list-name">${food.name}</div>
+        <div class="list-item-wrapper ${hasDetailsClass}" data-level="${food.level}" data-levels="${reachableLevels.join(',')}" data-name="${food.name.toLowerCase()}">
+          <div class="food-list-item ${hasDetailsClass}">
+            <span class="list-emoji">${food.emoji}</span>
+            <div class="list-info">
+              <div class="list-name">${food.name}</div>
+            </div>
+            ${rightContent}
+            ${expandIndicator}
           </div>
-          ${rightContent}
+          ${detailsHtml}
         </div>`;
     }
 
@@ -2098,7 +2237,7 @@
     // Apply all filters (FODMAP level + search)
     function applyFilters() {
       const foodCards = document.querySelectorAll('.food-card-container');
-      const foodListItems = document.querySelectorAll('.food-list-item');
+      const foodListWrappers = document.querySelectorAll('.list-item-wrapper');
       const categories = document.querySelectorAll('.category');
       let visibleCount = 0;
 
@@ -2117,7 +2256,7 @@
       });
 
       // Filter list view items (use data-levels to include portion-dependent foods)
-      foodListItems.forEach(item => {
+      foodListWrappers.forEach(item => {
         const itemLevels = item.dataset.levels ? item.dataset.levels.split(',') : [item.dataset.level];
         const matchesLevel = activeFilter === null || itemLevels.includes(activeFilter);
         const matchesSearch = searchQuery === '' || item.dataset.name.includes(searchQuery);
@@ -2132,7 +2271,7 @@
 
       // Hide categories that have no visible foods
       categories.forEach(category => {
-        const visibleCards = category.querySelectorAll('.food-card-container:not(.hidden), .food-list-item:not(.hidden)');
+        const visibleCards = category.querySelectorAll('.food-card-container:not(.hidden), .list-item-wrapper:not(.hidden)');
         if (visibleCards.length === 0) {
           category.classList.add('hidden');
         } else {
@@ -2163,11 +2302,22 @@
       }
     }
 
+    // Handle list item expand/collapse on click
+    function handleListItemClick(event) {
+      const listItem = event.target.closest('.list-item-wrapper.has-details');
+      if (listItem) {
+        listItem.classList.toggle('expanded');
+      }
+    }
+
     // Initialize
     renderApp();
 
-    // Add click listener for card flips (event delegation)
-    document.getElementById('app').addEventListener('click', handleCardClick);
+    // Add click listener for card flips and list expansions (event delegation)
+    document.getElementById('app').addEventListener('click', (event) => {
+      handleCardClick(event);
+      handleListItemClick(event);
+    });
 
     // Dark mode: update theme-color meta tag based on system preference
     const themeColorMeta = document.querySelector('meta[name="theme-color"]');
