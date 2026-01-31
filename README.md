@@ -30,6 +30,58 @@ Food data is based on [Monash University FODMAP Research](https://www.monashfodm
 
 This app is for informational purposes only. Always consult a registered dietitian before starting a low-FODMAP diet.
 
+## Development
+
+### Project Structure
+
+This is a single-file PWA. All code lives in `index.html`:
+
+```
+index.html          # Complete app (HTML, CSS, JS, and food database)
+manifest.json       # PWA manifest
+TODO.md             # Future improvements
+FODMAP_RESEARCH.md  # Research log with confirmed data
+src/                # Unused TypeScript version (not active)
+```
+
+### Food Database Location
+
+The food database is embedded in `index.html` as JavaScript objects:
+
+- **`foodData`** (~line 1370) - Main food entries organized by category
+- **`foodDetails`** (~line 872) - Flip card details for high-FODMAP foods
+
+### Food Entry Schema
+
+```javascript
+{
+  name: "Food Name",           // Display name
+  emoji: "🥕",                 // Visual icon
+  level: "low",                // "low" | "moderate" | "high"
+  serving: "75g (1 cup)",      // Optional: safe serving size
+  portions: {                  // Optional: portion-dependent thresholds
+    low: "50g",
+    moderate: "100g",
+    high: "150g+"
+  }
+}
+```
+
+### Categories
+
+`vegetables`, `fruits`, `grains`, `dairy`, `proteins`, `nuts_seeds`, `legumes`, `condiments`, `beverages`, `prepared`, `alcohol`
+
+### Adding New Foods
+
+1. Find the appropriate category in `foodData` (~line 1370)
+2. Add entry following the schema above
+3. For high-FODMAP foods, add flip card details to `foodDetails` (~line 872)
+
+### Research Resources
+
+- [FODMAP_RESEARCH.md](FODMAP_RESEARCH.md) - Research log
+- [Monash University FODMAP App](https://www.monashfodmap.com) - Primary data source
+
 ## License
 
 MIT

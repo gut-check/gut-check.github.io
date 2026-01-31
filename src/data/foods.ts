@@ -773,6 +773,21 @@ export const foods: FoodItem[] = [
     fodmapTypes: [],
     safeServingSize: { amount: 3, unit: "piece" },
   },
+  {
+    id: "brown_rice_flour",
+    name: "Brown Rice Flour",
+    category: "grains",
+    overallLevel: "low",
+    fodmapTypes: [],
+    notes: "Rice-based flours are low FODMAP",
+  },
+  {
+    id: "rice_starch",
+    name: "Rice Starch",
+    category: "grains",
+    overallLevel: "low",
+    fodmapTypes: [],
+  },
 
   // MODERATE FODMAP GRAINS
   {
@@ -1468,6 +1483,22 @@ export const foods: FoodItem[] = [
     fodmapTypes: [],
   },
   {
+    id: "soy_oil",
+    name: "Soy Oil",
+    category: "condiments",
+    overallLevel: "low",
+    fodmapTypes: [],
+    notes: "All oils are FODMAP-free",
+  },
+  {
+    id: "cinnamon",
+    name: "Cinnamon",
+    category: "condiments",
+    overallLevel: "low",
+    fodmapTypes: [],
+    notes: "Safe in typical culinary amounts",
+  },
+  {
     id: "vinegar",
     name: "Vinegar (Most Types)",
     category: "condiments",
@@ -1504,6 +1535,23 @@ export const foods: FoodItem[] = [
     category: "sweeteners",
     overallLevel: "low",
     fodmapTypes: [],
+  },
+  {
+    id: "brown_rice_syrup",
+    name: "Brown Rice Syrup",
+    category: "sweeteners",
+    overallLevel: "low",
+    fodmapTypes: [],
+    notes: "Glucose-based sweetener, safe alternative to honey",
+  },
+  {
+    id: "molasses",
+    name: "Molasses",
+    category: "sweeteners",
+    overallLevel: "low",
+    fodmapTypes: [],
+    safeServingSize: { amount: 1, unit: "tbsp" },
+    notes: "Low FODMAP in small amounts",
   },
 
   // HIGH FODMAP SWEETENERS & CONDIMENTS
