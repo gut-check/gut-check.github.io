@@ -1108,22 +1108,22 @@
         },
         Mango: {
           fodmapTypes: ["fructose"],
-          reasons: ["High fructose content", "Even small amounts high"],
+          reasons: ["Safe at ⅛ fruit (40g)", "Fructose accumulates quickly beyond 50g"],
           alternatives: ["Papaya", "Pineapple", "Passion fruit"],
         },
         Watermelon: {
           fodmapTypes: ["fructose", "mannitol"],
-          reasons: ["High fructose", "Contains mannitol"],
+          reasons: ["Safe at 1.5 tbsp (18g)", "Very small safe portion due to fructose + mannitol"],
           alternatives: ["Cantaloupe", "Honeydew (small)"],
         },
         Cherries: {
           fodmapTypes: ["fructose", "sorbitol"],
-          reasons: ["High sorbitol content", "Excess fructose"],
+          reasons: ["Safe at 2 cherries (20g)", "Sorbitol increases with larger portions"],
           alternatives: ["Blueberries", "Strawberries"],
         },
         Dates: {
           fodmapTypes: ["fructose"],
-          reasons: ["Very high in fructose", "Even 1 date can trigger symptoms"],
+          reasons: ["Safe at ~5 dates (30g)", "Medjool: safe at ~2 dates (39g)", "Fructose builds up in larger servings"],
           alternatives: ["Maple syrup", "Rice malt syrup", "Small amount of banana"],
         },
         Peach: {
@@ -1133,7 +1133,7 @@
         },
         Blackberries: {
           fodmapTypes: ["fructose"],
-          reasons: ["High fructose content"],
+          reasons: ["Low fructose at 22g serving", "Watch portions - fructose adds up beyond 30g"],
           alternatives: ["Blueberries", "Raspberries (small serve)"],
         },
         Grapes: {
@@ -1158,7 +1158,7 @@
         },
         Plum: {
           fodmapTypes: ["sorbitol"],
-          reasons: ["Very high sorbitol content", "All stone fruits problematic", "Fresh and dried both high"],
+          reasons: ["Safe at 1 small plum", "Sorbitol increases with additional servings"],
           alternatives: ["Blueberries", "Kiwi", "Grapes (small portion)"],
         },
         Prune: {
@@ -1291,12 +1291,12 @@
         Honey: {
           fodmapTypes: ["fructose"],
           reasons: ["Very high fructose", "Excess fructose load"],
-          alternatives: ["Maple syrup", "Rice malt syrup"],
+          alternatives: ["Maple syrup", "Rice malt syrup", "Monk Fruit"],
         },
         Agave: {
           fodmapTypes: ["fructose"],
-          reasons: ["Extremely high fructose", "Worse than honey"],
-          alternatives: ["Maple syrup", "Stevia", "Sugar"],
+          reasons: ["Very high excess fructose content", "Both agave and honey only tolerated in tiny amounts", "Often used in larger quantities, making it problematic"],
+          alternatives: ["Maple syrup", "Stevia", "Sugar", "Monk Fruit"],
         },
 
         // Beverages
@@ -1508,6 +1508,7 @@
             { name: "Spices (Most)", emoji: "🌶️", level: "low" },
             { name: "Cinnamon", emoji: "🌿", level: "low" },
             { name: "Stevia", emoji: "🌿", level: "low" },
+            { name: "Monk Fruit", emoji: "🍈", level: "low", serving: "check product label" },
             { name: "Stock (GF)", emoji: "🍲", level: "low" },
             { name: "Sugar", emoji: "🧂", level: "low" },
             { name: "Tahini", emoji: "🥣", level: "low", serving: "30g" },
